@@ -93,6 +93,23 @@ grunt.initConfig({
 		}
 	},
 
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              match: 'EMAILNAME',
+              replacement: emailname
+            }
+          ],
+          usePrefix: false
+        },
+        files: [
+          {expand: true, flatten: true, src: ['<%= paths.dist %>/*.html'], dest: '<%= paths.dist %>'}
+        ]
+      }
+    },
+
 // watch for changes to SCSS or HTML files
 	watch: {
 	  scripts: {
@@ -117,5 +134,6 @@ grunt.initConfig({
     require('load-grunt-tasks')(grunt);
 
 	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('dist',    ['processhtml:dist','replace:dist']); // use with --emailname=September+2015+Newsletter
 
 };

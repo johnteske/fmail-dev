@@ -1,5 +1,5 @@
 #fmail-dev
-Streamlining HTML email development using Grunt.
+Streamlining HTML email development using Grunt, working within limitations of ESP.
 
 ###Limitations of Email Service Provider
 Does not support:
@@ -23,7 +23,7 @@ Does not support:
 3. Send tests (from `build` directory)
 
 ###3. Finalize email for distribution
-`grunt dist` (to be created)
+`grunt dist --emailname=September+2015+Newsletter`
 
 ###4. Archive assets
 `grunt archive` (to be created)
