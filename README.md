@@ -2,28 +2,26 @@
 Streamlining HTML email development using Grunt, working within limitations of ESP.
 
 ###Limitations of Email Service Provider
-Does not support:
+Not supported:
 
 * Multi-part MIME
-* `<head>` and `<body>` tags
-* embedded style sheets
-* `<vml>` tags
+* `<head>`, `<style>`, `<body>`, `<vml>` tags
 
 ##Workflow
 
-###1. Generate new working document from templates
+###Generate new working document from templates and partials
 `grunt template` (to be created)
 
-###2. Develop email
-1. Start `grunt watch`
+###Develop email
+1. `grunt` run "watch" task
 2. Modify HTML and SCSS files in `src` directory, which will:
 	* Compile SCSS to CSS
 	* Inline CSS
 	* Remove certain tags and lines from source files
 3. Send tests (from `build` directory)
 
-###3. Finalize email for distribution
+###Finalize email for distribution
 `grunt dist --emailname=September+2015+Newsletter`
 
-###4. Archive assets
+###Archive assets
 `grunt archive` (to be created)
