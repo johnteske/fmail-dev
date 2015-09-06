@@ -1,18 +1,20 @@
-#fmail-dev
+# fmail-dev
 Streamlining HTML email development using Grunt, working within limitations of ESP.
 
-###Limitations of Email Service Provider
+### Limitations of Email Service Provider
 Not supported:
 
 * Multi-part MIME
 * `<head>`, `<style>`, `<body>`, `<vml>` tags
 
-##Workflow
+## Workflow
 
-###Generate new working document from templates and partials
+### Generate new working document from templates and partials
 `grunt template` (to be created)
+	* generate templates
+	* create project folder 
 
-###Develop email
+### Develop email
 1. `grunt` run "watch" task
 2. Modify HTML and SCSS files in `src` directory, which will:
 	* Compile SCSS to CSS
@@ -20,8 +22,12 @@ Not supported:
 	* Remove certain tags and lines from source files
 3. Send tests (from `build` directory)
 
-###Finalize email for distribution
+### Finalize email for distribution
 `grunt dist --emailname=September+2015+Newsletter`
 
-###Archive assets
+### Archive assets
 `grunt archive` (to be created)
+
+## To do
+	* test with grunt-replace v0.10.2
+	* add `grunt template`

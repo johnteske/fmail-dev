@@ -1,19 +1,25 @@
 module.exports = function(grunt) {
 
-var testtext = 'test';
+// project subfolder
+var folder = grunt.option('folder') || '';
+
+// Google Analytics tag, to add in dist
 var emailname = grunt.option('emailname') || 'EMAILNAME';
 
 grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
 
+
 	paths: {
 		layouts: 'layouts',
 		templates: 'templates',
-		src: 'src',
-		build: 'build',
-		dist: 'dist',
-		pdf: 'pdf'
+		src: 'src/' + folder,
+		build: 'build/' + folder,
+		dist: 'dist'/ + folder,
+		pdf: 'pdf', // eventually put pdfs in project folders
+		folder: folder
 	},
+
 
 // compile CSS
 	sass: {
@@ -28,6 +34,7 @@ grunt.initConfig({
 		}
 	},
 
+
 // inline CSS
     juice: {
         options: {
@@ -41,13 +48,14 @@ grunt.initConfig({
 	      files: [
 	        {
 	          expand: true,
-	          cwd: '<%= paths.src %>/',
+	          cwd: '<%= paths.src %>',
 	          src: ['*.html'],
-	          dest: '<%= paths.build %>/',
+	          dest: '<%= paths.build %>',
 	        },
 	      ],
   	    }
     },
+
 
 // create PDF for preview/archive
 	wkhtmltopdf: {
@@ -64,11 +72,12 @@ grunt.initConfig({
       }
 	},
 
+
 	processhtml: {
 		options: {
 		  process: true,
 		  data: {
-		    message: testtext
+		    message: ''
 		  }
 		},
 // build new working document from template
@@ -93,6 +102,7 @@ grunt.initConfig({
 		}
 	},
 
+
     replace: {
       dist: {
         options: {
@@ -110,14 +120,15 @@ grunt.initConfig({
       }
     },
 
-// watch for changes to SCSS or HTML files
+
+// watch for changes to HTML & SCSS files
 	watch: {
-	  scripts: {
-	    files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss'],
-		// if using newer:juice, updating sass file will not trigger livereload
+	  source: {
+	    files: ['<%= paths.src %>*.html', '<%= paths.src %>/*.scss'],
 	    tasks: ['newer:sass:dist','juice'],
 	    options: {
 	      spawn: false,
+	      atBegin: true
 	    },
 	  },
 	  configFiles: {
@@ -128,12 +139,25 @@ grunt.initConfig({
 	  }
 	}
 
-});
 
-    // Load all Grunt tasks
+}); // grunt.initConfig
+
+
+    // load all Grunt tasks
     require('load-grunt-tasks')(grunt);
 
+	// `grunt`
 	grunt.registerTask('default', ['watch']);
-	grunt.registerTask('dist',    ['processhtml:dist','replace:dist']); // use with --emailname=September+2015+Newsletter
+
+	// `grunt dist --emailname=September+2015+Newsletter`
+	grunt.registerTask('dist', ['processhtml:dist','replace:dist']);
+
+	// debugging
+/*
+	grunt.event.on('watch', function(action, filepath, target) {
+// 	  grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
+	  grunt.log.writeln(folder);
+	});
+*/
 
 };
