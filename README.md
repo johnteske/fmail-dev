@@ -11,8 +11,8 @@ Not supported:
 
 ### Generate new working document from templates and partials
 `grunt template` (to be created)
-	* generate templates
-	* create project folder 
+* generate templates
+* create project folder 
 
 ### Develop email
 1. `grunt` run "watch" task
@@ -29,5 +29,5 @@ Not supported:
 `grunt archive` (to be created)
 
 ## To do
-	* test with grunt-replace v0.10.2
-	* add `grunt template`
+* test with grunt-replace v0.10.2
+* add `grunt template`
