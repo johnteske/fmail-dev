@@ -15,7 +15,7 @@ grunt.initConfig({
 		templates: 'templates',
 		src: 'src/' + folder,
 		build: 'build/' + folder,
-		dist: 'dist'/ + folder,
+		dist: 'dist/' + folder,
 		pdf: 'pdf', // eventually put pdfs in project folders
 		folder: folder
 	},
