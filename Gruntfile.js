@@ -1,10 +1,14 @@
 module.exports = function(grunt) {
 
+
 // project subfolder
 var folder = grunt.option('folder') || '';
 
 // Google Analytics tag, to add in dist
 var emailname = grunt.option('emailname') || 'EMAILNAME';
+
+// which template to use on assemble
+var template = grunt.option('template') || '*.hbs';
 
 grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
@@ -13,12 +17,30 @@ grunt.initConfig({
 	paths: {
 		layouts: 'layouts',
 		templates: 'templates',
+		template: template,
 		src: 'src/' + folder,
 		build: 'build/' + folder,
 		dist: 'dist/' + folder,
 		pdf: 'pdf', // eventually put pdfs in project folders
 		folder: folder
 	},
+
+
+// assemble email templates
+    assemble: {
+      options: {
+        layoutdir: '<%= paths.templates %>/layouts',
+        partials: ['<%= paths.templates %>/partials/**/*.hbs'],
+        helpers: ['<%= paths.templates %>/helpers/**/*.js'],
+        data: ['<%= paths.templates %>/data/*.{json,yml}'],
+        flatten: true
+      },
+      pages: {
+        src: ['<%= paths.templates %>/emails/<%= paths.template %>'],
+//        src: ['<%= paths.templates %>/emails/*.hbs'],
+        dest: '<%= paths.src %>/'
+      }
+    },
 
 
 // compile CSS
@@ -143,8 +165,14 @@ grunt.initConfig({
 }); // grunt.initConfig
 
 
+	// load assemble
+	grunt.loadNpmTasks('assemble');
+
     // load all Grunt tasks
     require('load-grunt-tasks')(grunt);
+
+	// `grunt temp --folder= --date=
+	grunt.registerTask('temp', ['processhtml:tempbuild']);
 
 	// `grunt`
 	grunt.registerTask('default', ['watch']);
@@ -159,5 +187,6 @@ grunt.initConfig({
 	  grunt.log.writeln(folder);
 	});
 */
+
 
 };
