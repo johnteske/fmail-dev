@@ -46,14 +46,13 @@ grunt.initConfig({
     },
 
 
-// copy files
+// copy files -- will use for archive feature later
 copy: {
   project: {
 	  files: [{
 	    expand: true,
-	    cwd: '<%= paths.templates %>/emails/',
-	    src:  '<%= paths.template %>',
-//	    src: ['**'], //<%= paths.template %>
+	    cwd: '<%= paths.src %>',
+	    src:  '<%= paths.src %>',
 	    dest: '<%= paths.src %>',
 	  }]
   },
@@ -177,7 +176,7 @@ json_generator: {
 // watch for changes to HTML & SCSS files
 	watch: {
 	  source: {
-	    files: ['<%= paths.src %>*.html', '<%= paths.src %>/*.scss'],
+	    files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss'],
 	    tasks: ['newer:sass:dist','juice'],
 	    options: {
 	      spawn: false,
