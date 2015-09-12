@@ -40,13 +40,12 @@ grunt.initConfig({
       },
       pages: {
         src: ['<%= paths.templates %>/emails/<%= paths.template %>'],
-//        src: ['<%= paths.templates %>/emails/*.hbs'],
         dest: '<%= paths.src %>/'
       }
     },
 
 
-// copy files -- will use for archive feature later
+// TODO copy files into archive folders
 copy: {
   project: {
 	  files: [{
@@ -109,7 +108,7 @@ json_generator: {
     },
 
 
-// create PDF for preview/archive
+// TODO create PDF for preview/archive
 	wkhtmltopdf: {
       dev: {
         src: '<%= paths.src %>/*.html',
@@ -131,16 +130,6 @@ json_generator: {
 		  data: {
 		    message: ''
 		  }
-		},
-// build new working document from template
-		tempbuild: {
-		      files: [{
-		        expand: true,
-		        cwd: '<%= paths.templates %>',
-		        src: ['*.html'],
-		        dest: '<%= paths.src %>',
-		        ext: '.html'
-		      }]
 		},
 // clean the built files, put in dist folder
 		dist: {
