@@ -1,17 +1,17 @@
 module.exports = function(grunt) {
 
-
-// project subfolder
-var folder = grunt.option('folder') || '';
+// project
+var project = grunt.option('project') || '';
 
 // Google Analytics tag, to add in dist
-var emailname = grunt.option('emailname') || 'EMAILNAME';
+//var emailName = grunt.option('emailname') || 'EMAILNAME';
+var emailName = project.replace(/-/g, "+");
 
 // which template to use on assemble
 var template = grunt.option('template') || '*.hbs';
 
 // send date
-var senddate = grunt.option('date') || grunt.template.today('yymmdd');
+var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
 
 grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
@@ -21,11 +21,10 @@ grunt.initConfig({
 		layouts: 'layouts',
 		templates: 'templates',
 		template: template,
-		src: 'src/' + folder,
-		build: 'build/' + folder,
-		dist: 'dist/' + folder,
+		src: 'src/' + project,
+		build: 'build/' + project,
+		dist: 'dist/' + project,
 		pdf: 'pdf', // eventually put pdfs in project folders
-		folder: folder
 	},
 
 
@@ -45,7 +44,9 @@ grunt.initConfig({
     },
 
 
+// TODO copy scss files into project folders
 // TODO copy files into archive folders
+// folder name: sendDate-project
 copy: {
   project: {
 	  files: [{
@@ -62,9 +63,9 @@ json_generator: {
     target: {
 	    dest: '<%= paths.src %>/project.json',
         options: {
-            project: folder,
-            emailname: emailname,
-            senddate: senddate,
+            project: project,
+            emailName: emailName,
+            sendDate: sendDate,
             subjectline: "",
             recipients: "", // who
             number: 0 // how many
@@ -150,7 +151,7 @@ json_generator: {
           patterns: [
             {
               match: 'EMAILNAME',
-              replacement: emailname
+              replacement: emailName
             }
           ],
           usePrefix: false
@@ -190,6 +191,7 @@ json_generator: {
     // load all Grunt tasks
     require('load-grunt-tasks')(grunt);
 
+
 	// `grunt new`
 	grunt.registerTask('new', ['json_generator', 'assemble']);
 
@@ -198,14 +200,6 @@ json_generator: {
 
 	// `grunt dist --emailname=September+2015+Newsletter`
 	grunt.registerTask('dist', ['processhtml:dist','replace:dist']);
-
-	// debugging
-/*
-	grunt.event.on('watch', function(action, filepath, target) {
-// 	  grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
-	  grunt.log.writeln(folder);
-	});
-*/
 
 
 };

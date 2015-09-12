@@ -5,7 +5,7 @@ Streamlining HTML email development using Grunt
 
 ### Generate new working document from templates and partials
 `grunt new`
-`grunt new --folder= --date= --template=`
+`grunt new --project= --date= --template=`
 * create project folder and JSON data file
 * generate template
 
@@ -27,6 +27,8 @@ Streamlining HTML email development using Grunt
 * test with grunt-replace v0.10.2
 * look into express server
 * open new file in browser upon creation
+* reconsider differences in emailname, project name, etc.
+* `grunt dist` to pull emailName from project.json file
 
 ## Templates
 ### Limitations of Email Service Provider

@@ -2,5 +2,6 @@
 ._*
 node_modules
 *.css.map
+src
 build
 dist
