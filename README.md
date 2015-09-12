@@ -1,18 +1,12 @@
 # fmail-dev
-Streamlining HTML email development using Grunt, working within limitations of ESP.
-
-### Limitations of Email Service Provider
-Not supported:
-
-* Multi-part MIME
-* `<head>`, `<style>`, `<body>`, `<vml>` tags
+Streamlining HTML email development using Grunt
 
 ## Workflow
 
 ### Generate new working document from templates and partials
-`grunt template` (to be created)
-* generate templates
-* create project folder 
+`grunt new`
+* create project folder and JSON data file
+* generate template
 
 ### Develop email
 1. `grunt` run "watch" task
@@ -31,3 +25,9 @@ Not supported:
 ## To do
 * test with grunt-replace v0.10.2
 * add `grunt template`
+
+### Limitations of Email Service Provider
+Not supported:
+
+* Multi-part MIME
+* `<head>`, `<style>`, `<body>`, `<vml>` tags

@@ -10,6 +10,9 @@ var emailname = grunt.option('emailname') || 'EMAILNAME';
 // which template to use on assemble
 var template = grunt.option('template') || '*.hbs';
 
+// send date
+var senddate = grunt.option('date') || grunt.template.today('yymmdd');
+
 grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
 
@@ -42,6 +45,34 @@ grunt.initConfig({
       }
     },
 
+
+// copy files
+copy: {
+  project: {
+	  files: [{
+	    expand: true,
+	    cwd: '<%= paths.templates %>/emails/',
+	    src:  '<%= paths.template %>',
+//	    src: ['**'], //<%= paths.template %>
+	    dest: '<%= paths.src %>',
+	  }]
+  },
+},
+
+// create json data file (and project folder if needed)
+json_generator: {
+    target: {
+	    dest: '<%= paths.src %>/project.json',
+        options: {
+            project: folder,
+            emailname: emailname,
+            senddate: senddate,
+            subjectline: "",
+            recipients: "", // who
+            number: 0 // how many
+        }
+    }
+},
 
 // compile CSS
 	sass: {
@@ -171,8 +202,8 @@ grunt.initConfig({
     // load all Grunt tasks
     require('load-grunt-tasks')(grunt);
 
-	// `grunt temp --folder= --date=
-	grunt.registerTask('temp', ['processhtml:tempbuild']);
+	// `grunt new`
+	grunt.registerTask('new', ['json_generator', 'assemble']);
 
 	// `grunt`
 	grunt.registerTask('default', ['watch']);
