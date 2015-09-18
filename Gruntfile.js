@@ -16,9 +16,11 @@ var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
 grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
 
+	vars: {
+		test: 'varstest world'
+	},
 
 	paths: {
-		layouts: 'layouts',
 		templates: 'templates',
 		template: template,
 		src: 'src/' + project,
@@ -129,8 +131,18 @@ json_generator: {
 		options: {
 		  process: true,
 		  data: {
-		    message: ''
+		    name: '<%= vars.test %>',
 		  }
+		},
+// build
+		build: {
+		      files: [{
+		        expand: true,
+		        cwd: '<%= paths.src %>',
+		        src: ['*.html'],
+		        dest: '<%= paths.build %>',
+		        ext: '.html'
+		      }]
 		},
 // clean the built files, put in dist folder
 		dist: {
@@ -191,6 +203,14 @@ json_generator: {
     // load all Grunt tasks
     require('load-grunt-tasks')(grunt);
 
+    // will use this to pass variables more easily
+    // i.e. `grunt new:150915:September-Newsletter:simple.hbs`
+    // vs. `grunt new --date=150915 --project=September-Newsletter --template=simple.hbs`
+	grunt.registerTask('test', 'Upload code to specified target.', function(n) {
+	  var target = n || grunt.option('target') || 'derp';
+	  grunt.config.set('vars.test', target);
+	  grunt.task.run('processhtml:build:' + target);
+	});
 
 	// `grunt new`
 	grunt.registerTask('new', ['json_generator', 'assemble']);
