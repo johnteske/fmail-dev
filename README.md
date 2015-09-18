@@ -21,7 +21,6 @@ Streamlining HTML email development using Grunt
 
 #### Finalize email for distribution
 `grunt dist --project=September-2015-Newsletter`
-emailName is generated from project name
 
 #### Archive assets
 `grunt archive` (to be created)
@@ -44,13 +43,18 @@ emailName is generated from project name
 #### Project creation
 * add templates
 * copy `.scss` files to project folder
-* open new file in browser upon creation—or at least `build` directory
+* open new file in browser upon creation—or at least `build` directory. could also be task of its own.
+
+#### Distribution
+* currently emailName is pulled from project parameter—pull it from project.json
+* add alias for shorthand i.e. `grunt dist:September-2015-Newsletter`
 
 #### Archive
 * create task
 * add subject line as comment in final, archived html file
 
 #### Maintenance and documentation
+* reconfigure todo and workflow list as checkboxes?
 * add requirements and setup information
 * test with `grunt-replace` v0.10.2
 * look into express server over livereload
