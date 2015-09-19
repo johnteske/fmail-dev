@@ -79,7 +79,7 @@ json_generator: {
 	        expand: true,
 	        cwd: '<%= paths.src %>',
 	        src: ['*.scss'],
-	        dest: '<%= paths.src %>',
+	        dest: '<%= paths.src %>/css',
 	        ext: '.css'
 	      }]
 		}

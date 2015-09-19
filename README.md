@@ -37,7 +37,6 @@ Streamlining HTML email development using Grunt
 * `grunt watch` default to all folders in src unless project is specified
 * default `grunt` task should build once, accepts project parameter
 * upload local images to server
-* put css files in subfolder, for clarity in development
 * fix, streamline pdf previews
 
 #### Project creation
@@ -58,5 +57,4 @@ Streamlining HTML email development using Grunt
 * add requirements and setup information
 * test with `grunt-replace` v0.10.2
 * look into express server over livereload
-* `grunt dist` to pull emailName from project.json file
 * replace `assemble` with `grunt-assemble`?
