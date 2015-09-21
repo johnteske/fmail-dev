@@ -172,6 +172,14 @@ json_generator: {
     },
 
 
+		open : {
+	    build : {
+	      path: '<%= paths.build %>',
+	      // app: 'Google Chrome'
+	    },
+	  },
+
+
 // watch for changes to HTML & SCSS files
 	watch: {
 	  source: {
