@@ -183,7 +183,8 @@ json_generator: {
 // watch for changes to HTML & SCSS files
 	watch: {
 	  source: {
-	    files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss'],
+		// do not watch files with a leading underscore
+	    files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss', '!<%= paths.src %>/_*.*'],
 	    tasks: ['newer:sass:dist','juice'],
 	    options: {
 	      spawn: false,
