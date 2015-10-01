@@ -24,6 +24,8 @@ npm install
 
 #### Develop email
 1. `grunt watch` watches for changes to HTML and SCSS files
+* `grunt watch --project=September-2015-newsletter` watches specified project folder in `src`
+* running `grunt watch` from `src` directory allows auto completion on directory names
 2. Modify HTML and SCSS files in `src` directory, which will:
 	* Compile SCSS to CSS
 	* Inline CSS
@@ -45,9 +47,9 @@ npm install
 ## To do
 
 #### Development and watch task
-* `grunt watch` default to all folders in src unless project is specified
-* default `grunt` task should build once, accepts project parameter
-* upload local images to server
+* default `grunt watch` should watch all folders in `src` if project is not specified
+* default `grunt` task should build once and accept project parameter
+* upload local images to ftp server
 * fix, streamline pdf previews
 
 #### Project creation

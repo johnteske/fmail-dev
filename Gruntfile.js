@@ -24,6 +24,7 @@ grunt.initConfig({
 		build: 'build/' + project,
 		dist: 'dist/' + project,
 		pdf: 'pdf', // eventually put pdfs in project folders
+		ignore: '*_.html', // ignore files with leading underscore
 	},
 
 
@@ -96,14 +97,14 @@ json_generator: {
 	        }
         },
         dist: {
-	      files: [
-	        {
-	          expand: true,
-	          cwd: '<%= paths.src %>',
-	          src: ['*.html'],
-	          dest: '<%= paths.build %>',
-	        },
-	      ],
+		      files: [
+		        {
+		          expand: true,
+		          cwd: '<%= paths.src %>',
+		          src: ['*.html', '!<%= paths.ignore %>'],
+		          dest: '<%= paths.build %>',
+		        },
+		      ],
   	    }
     },
 
@@ -183,8 +184,7 @@ json_generator: {
 // watch for changes to HTML & SCSS files
 	watch: {
 	  source: {
-		// do not watch files with a leading underscore
-	    files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss', '!<%= paths.src %>/_*.*'],
+	    files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss', '!<%= paths.src %>/<%= paths.ignore %>'],
 	    tasks: ['newer:sass:dist','juice'],
 	    options: {
 	      spawn: false,
@@ -197,7 +197,12 @@ json_generator: {
 	      reload: true
 	    }
 	  }
-	}
+	},
+
+	// clean the build directory
+	// * eventually allow project parameter
+	// * and run after archive (require task to make sure copy was successful)
+	clean: ["<%= paths.build %>/*.*"]
 
 
 }); // grunt.initConfig
