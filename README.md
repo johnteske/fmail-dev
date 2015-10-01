@@ -1,6 +1,17 @@
 # fmail-dev
 Streamlining HTML email development using Grunt
 
+### Requirements
+* [Node.js](https://nodejs.org/)
+* [Grunt-cli and Grunt](http://gruntjs.com/)
+
+### Set up
+```
+git clone https://github.com/johnteske/fmail-dev
+cd fmail-dev
+npm install
+```
+
 ## Workflow
 
 #### Create new project
