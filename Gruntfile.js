@@ -199,10 +199,13 @@ json_generator: {
 	  }
 	},
 
-	// clean the build directory
-	// * eventually allow project parameter
-	// * and run after archive (require task to make sure copy was successful)
-	clean: ["<%= paths.build %>/*.*"]
+// clean the build directory
+	clean: {
+		options: {
+			'no-write': false
+		},
+		build: ["<%= paths.build %>/**"]
+	},
 
 
 }); // grunt.initConfig

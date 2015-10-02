@@ -18,13 +18,13 @@ npm install
 
 `grunt new` (assembles all templates into `src` directory)
 
-`grunt new --project= --date= --template=`
+`grunt new --project=September-newsletter --date=150901 --template=`
 * creates project folder and JSON data file
 * generates working HTML document from template
 
 #### Develop email
 1. `grunt watch` watches for changes to HTML and SCSS files
-* `grunt watch --project=September-2015-newsletter` watches specified project folder in `src`
+* `grunt watch --project=September-newsletter` watches specified project folder in `src`
 * running `grunt watch` from `src` directory allows auto completion on directory names
 2. Modify HTML and SCSS files in `src` directory, which will:
 	* Compile SCSS to CSS
@@ -33,7 +33,7 @@ npm install
 3. Send tests (from `build` directory)
 
 #### Finalize email for distribution
-`grunt dist --project=September-2015-Newsletter`
+`grunt dist --project=September-Newsletter`
 
 #### Archive assets
 `grunt archive` (to be created)
@@ -64,6 +64,9 @@ npm install
 #### Archive
 * create task
 * add subject line as comment in final, archived html file
+* copy files to archive folders
+* clean `build` (and `src`?) directory after archive (require task to make sure copy was successful)
+
 
 #### Maintenance and documentation
 * reconfigure todo and workflow list as checkboxes?
