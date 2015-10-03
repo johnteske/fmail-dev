@@ -187,7 +187,7 @@ grunt.initConfig({
 	watch: {
 	  source: {
 	    files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss', '!<%= paths.src %>/<%= paths.ignore %>'],
-	    tasks: ['newer:sass:dist','juice'],
+			tasks: ['default'],
 	    options: {
 	      spawn: false,
 	      atBegin: true
@@ -223,7 +223,7 @@ grunt.initConfig({
 	grunt.registerTask('new', ['json_generator', 'assemble', 'open']);
 
 	// `grunt`
-	grunt.registerTask('default', ['watch']);
+	grunt.registerTask('default', ['newer:sass:dist','juice']);
 
 	// `grunt dist --emailname=September+2015+Newsletter`
 	grunt.registerTask('dist', ['processhtml:dist','replace:dist']);

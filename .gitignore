@@ -1,8 +1,10 @@
 .DS_Store
 ._*
+
 node_modules
 .sass-cache
 *.css.map
+
 src
 build
 dist
