@@ -35,8 +35,8 @@ npm install
 #### Finalize email for distribution
 `grunt dist --project=September-Newsletter`
 
-#### Archive assets
-`grunt archive` (to be created)
+#### Archive assets to `archive` directory
+`grunt archive --project=September-Newsletter`
 
 ### Templates
 #### Not Supported by Email Service Provider
@@ -48,9 +48,11 @@ npm install
 
 #### Development and watch task
 * default `grunt watch` should watch all folders in `src` if project is not specified
-* default `grunt` task should build once and accept project parameter
 * upload local images to ftp server
-* fix, streamline pdf previews
+* fix, streamline pdf previews. try:
+ 	[jsPDF](https://github.com/MrRio/jsPDF) or
+	[html-pdf](https://www.npmjs.com/package/html-pdf)
+* processhtml to selectively insert and remove subject line, etc.
 
 #### Project creation
 * add templates
@@ -61,13 +63,13 @@ npm install
 * add alias for shorthand i.e. `grunt dist:September-Newsletter`
 
 #### Archive
-* create task
+* allow multiple destinations, by file type?
+* add date to project folder name
+* list of links and analytics tags, for reference later (could also be used to check links during testing)
 * add subject line as comment in final, archived html file
-* copy files to archive folders
 * clean `build` (and `src`?) directory after archive (require task to make sure copy was successful)
 
 #### Maintenance and documentation
-* clean up whitespace in Gruntfile
 * reconfigure todo and workflow list as checkboxes?
 * add requirements and setup information
 * test with `grunt-replace` v0.10.2
