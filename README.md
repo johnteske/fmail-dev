@@ -55,11 +55,10 @@ npm install
 #### Project creation
 * add templates
 * copy `.scss` files to project folder
-* open new file in browser upon creation—or at least `build` directory. could also be task of its own.
 
 #### Distribution
 * currently emailName is pulled from project parameter—pull it from project.json
-* add alias for shorthand i.e. `grunt dist:September-2015-Newsletter`
+* add alias for shorthand i.e. `grunt dist:September-Newsletter`
 
 #### Archive
 * create task
@@ -67,8 +66,8 @@ npm install
 * copy files to archive folders
 * clean `build` (and `src`?) directory after archive (require task to make sure copy was successful)
 
-
 #### Maintenance and documentation
+* clean up whitespace in Gruntfile
 * reconfigure todo and workflow list as checkboxes?
 * add requirements and setup information
 * test with `grunt-replace` v0.10.2

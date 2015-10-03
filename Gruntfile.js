@@ -46,32 +46,34 @@ grunt.initConfig({
 
 // TODO copy scss files into project folders
 // TODO copy files into archive folders
-// folder name: sendDate-project
-copy: {
-  project: {
-	  files: [{
-	    expand: true,
-	    cwd: '<%= paths.src %>',
-	    src:  '<%= paths.src %>',
-	    dest: '<%= paths.src %>',
-	  }]
-  },
-},
+// folder name: project
+	copy: {
+	  project: {
+		  files: [{
+		    expand: true,
+		    cwd: '<%= paths.src %>',
+		    src:  '<%= paths.src %>',
+		    dest: '<%= paths.src %>',
+		  }]
+	  },
+	},
+
 
 // create json data file (and project folder if needed)
-json_generator: {
-    target: {
-	    dest: '<%= paths.src %>/project.json',
-        options: {
-            project: project,
-            emailName: emailName,
-            sendDate: sendDate,
-            subjectline: "",
-            recipients: "", // who
-            number: 0 // how many
-        }
-    }
-},
+	json_generator: {
+	    target: {
+		    dest: '<%= paths.src %>/project.json',
+	        options: {
+	            project: project,
+	            emailName: emailName,
+	            sendDate: sendDate,
+	            subjectline: "",
+	            recipients: "", // who
+	            number: 0 // how many
+	        }
+	    }
+	},
+
 
 // compile CSS
 	sass: {
@@ -173,12 +175,12 @@ json_generator: {
     },
 
 
-		open : {
-	    build : {
-	      path: '<%= paths.build %>',
-	      // app: 'Google Chrome'
-	    },
+	open : {
+      build : {
+	    path: '<%= paths.build %>',
+	    // app: 'Google Chrome'
 	  },
+	},
 
 
 // watch for changes to HTML & SCSS files
@@ -201,10 +203,10 @@ json_generator: {
 
 // clean the build directory
 	clean: {
-		options: {
-			'no-write': false
-		},
-		build: ["<%= paths.build %>/**"]
+	  options: {
+		'no-write': false
+	  },
+	  build: ["<%= paths.build %>/**"]
 	},
 
 
@@ -218,7 +220,7 @@ json_generator: {
 	require('load-grunt-tasks')(grunt);
 
 	// `grunt new`
-	grunt.registerTask('new', ['json_generator', 'assemble']);
+	grunt.registerTask('new', ['json_generator', 'assemble', 'open']);
 
 	// `grunt`
 	grunt.registerTask('default', ['watch']);
