@@ -15,13 +15,13 @@ npm install
 ## Workflow
 
 #### Create new project
-
+<!--
 `grunt new` (assembles all templates into `src` directory)
 
 `grunt new --project=September-newsletter --date=150901 --template=`
 * creates project folder and JSON data file
 * generates working HTML document from template
-
+-->
 #### Develop email
 1. `grunt watch` watches for changes to HTML and SCSS files
 * `grunt watch --project=September-newsletter` watches specified project folder in `src`
@@ -53,6 +53,7 @@ npm install
  	[jsPDF](https://github.com/MrRio/jsPDF) or
 	[html-pdf](https://www.npmjs.com/package/html-pdf)
 * processhtml to selectively insert and remove subject line, etc.
+* `scss` partials
 
 #### Project creation
 * add templates

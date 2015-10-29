@@ -25,7 +25,7 @@ module.exports = function(grunt) {
             dist: 'dist/' + project,
             archive: 'archive/' + project,
             pdf: 'pdf', // eventually put pdfs in project folders
-            ignore: '*_.html' // ignore files with leading underscore
+            ignore: '_*.*' // ignore files with leading underscore
         },
 
 
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                 flatten: true
             },
             pages: {
-                src: ['<%= paths.templates %>/emails/<%= paths.template %>'],
+                src: ['<%= paths.src %>/*.hbs', '!<%= paths.src %>/<%= paths.ignore %>'],
                 dest: '<%= paths.src %>/'
             }
         },
@@ -48,40 +48,40 @@ module.exports = function(grunt) {
         // TODO copy scss files into project folders
         // TODO copy files into archive folders
         // folder name: project
-        copy: {
-            project: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= paths.src %>',
-                    src: '<%= paths.src %>',
-                    dest: '<%= paths.src %>'
-                }]
-            },
-            archive: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= paths.src %>',
-                    src: '*.html',
-                    dest: '<%= paths.archive %>'
-                }]
-            }
-        },
+        // copy: {
+        //     project: {
+        //         files: [{
+        //             expand: true,
+        //             cwd: '<%= paths.src %>',
+        //             src: '<%= paths.src %>',
+        //             dest: '<%= paths.src %>'
+        //         }]
+        //     },
+        //     archive: {
+        //         files: [{
+        //             expand: true,
+        //             cwd: '<%= paths.src %>',
+        //             src: '*.html',
+        //             dest: '<%= paths.archive %>'
+        //         }]
+        //     }
+        // },
 
 
         // create json data file (and project folder if needed)
-        json_generator: {
-            target: {
-                dest: '<%= paths.src %>/project.json',
-                options: {
-                    project: project,
-                    emailName: emailName,
-                    sendDate: sendDate,
-                    subjectline: "",
-                    recipients: "", // who
-                    number: 0 // how many
-                }
-            }
-        },
+        // json_generator: {
+        //     target: {
+        //         dest: '<%= paths.src %>/project.json',
+        //         options: {
+        //             project: project,
+        //             emailName: emailName,
+        //             sendDate: sendDate,
+        //             subjectline: "",
+        //             recipients: "", // who
+        //             number: 0 // how many
+        //         }
+        //     }
+        // },
 
 
         // compile CSS
@@ -121,18 +121,18 @@ module.exports = function(grunt) {
 
 
         // TODO create PDF for preview/archive
-        wkhtmltopdf: {
-            dev: {
-                src: '<%= paths.src %>/*.html',
-                dest: '<%= paths.pdf %>/',
-                args: [
-                    '--page-size', 'tabloid',
-                    '--dpi', '144',
-                    '--image-quality', '70',
-                    '--zoom', '0.75'
-                ]
-            }
-        },
+        // wkhtmltopdf: {
+        //     dev: {
+        //         src: '<%= paths.src %>/*.html',
+        //         dest: '<%= paths.pdf %>/',
+        //         args: [
+        //             '--page-size', 'tabloid',
+        //             '--dpi', '144',
+        //             '--image-quality', '70',
+        //             '--zoom', '0.75'
+        //         ]
+        //     }
+        // },
 
 
         processhtml: {
@@ -194,8 +194,11 @@ module.exports = function(grunt) {
         // watch for changes to HTML & SCSS files
         watch: {
             templates: {
-              files: ['<%= paths.templates %>/css/scss/*','<%= paths.templates %>/emails/*','<%= paths.templates %>/layouts/*','<%= paths.templates %>/partials/*','<%= paths.templates %>/data/*','<%= paths.templates %>/helpers/*'],
-              tasks: ['assemble']
+              files: ['<%= paths.templates %>/css/scss/*','<%= paths.src %>/*.hbs','<%= paths.templates %>/layouts/*','<%= paths.templates %>/partials/*','<%= paths.templates %>/data/*','<%= paths.templates %>/helpers/*'],
+              tasks: ['assemble'],
+              options: {
+                  atBegin: true
+              }
             },
             source: {
                 files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss', '!<%= paths.src %>/<%= paths.ignore %>'],
@@ -214,6 +217,7 @@ module.exports = function(grunt) {
         },
 
         // clean the build directory
+        // TODO: also clean dist directory
         clean: {
             options: {
                 'no-write': false
@@ -232,15 +236,16 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
     // `grunt new`
-    grunt.registerTask('new', ['json_generator', 'assemble', 'open']);
+    // grunt.registerTask('new', ['json_generator', 'assemble', 'open']);
+    // grunt.registerTask('new', ['assemble', 'open']);
 
     // `grunt`
-    grunt.registerTask('default', ['newer:sass:dist', 'juice']);
+    grunt.registerTask('default', ['assemble', 'sass:dist', 'juice']);
 
     // `grunt dist --project=September+Newsletter`
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
     // `grunt archive --project=September+Newsletter`
-    grunt.registerTask('archive', ['copy:archive']);
+    // grunt.registerTask('archive', ['copy:archive']);
 
 };
