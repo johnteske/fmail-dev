@@ -62,34 +62,3 @@ Run `grunt --project=September-newsletter` to run `build` command once
 
 * Multi-part MIME
 * `<head>`, `<style>`, `<body>`, `<vml>` tags
-
-## To do
-
-#### Development and watch task
-* default `grunt watch` should watch all folders in `src` if project is not specified
-* upload local images to ftp server
-* fix, streamline pdf previews. try:
- 	[jsPDF](https://github.com/MrRio/jsPDF) or
-	[html-pdf](https://www.npmjs.com/package/html-pdf)
-* processhtml to selectively insert and remove subject line, etc.
-* `scss` partials
-
-#### Project creation
-* copy `.scss` files to project folder
-
-#### Distribution
-* currently emailName is pulled from project parameter—pull it from project.json
-* add alias for shorthand i.e. `grunt dist:September-Newsletter`
-
-#### Archive
-* allow multiple destinations, by file type?
-* add date to project folder name
-* list of links and analytics tags, for reference later (could also be used to check links during testing)
-* add subject line as comment in final, archived html file
-* clean `build` (and `src`?) directory after archive (require task to make sure copy was successful)
-
-#### Maintenance and documentation
-* add requirements and setup information
-* test with `grunt-replace` v0.10.2
-* look into express server over livereload
-* replace `assemble` with `grunt-assemble`?
