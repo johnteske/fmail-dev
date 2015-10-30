@@ -138,17 +138,18 @@ module.exports = function(grunt) {
         processhtml: {
             options: {
                 process: true,
+                strip: true,
                 data: {
-                    name: '<%= vars.test %>'
+                    name: emailName // '<%= vars.test %>'
                 }
             },
-            // build
-            build: {
+            // test
+            test: {
                 files: [{
                     expand: true,
-                    cwd: '<%= paths.src %>',
+                    cwd: '<%= paths.build %>',
                     src: ['*.html'],
-                    dest: '<%= paths.build %>',
+                    dest: '<%= paths.dist %>',
                     ext: '.html'
                 }]
             },
@@ -169,10 +170,8 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     patterns: [
-                        {
-                            match: 'EMAILNAME',
-                            replacement: emailName
-                        }
+                        { match: 'EMAILNAME', replacement: emailName },
+                        { match: '!img', replacement: 'img' }
                     ],
                     usePrefix: false
                 },
@@ -243,6 +242,7 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['assemble', 'sass:dist', 'juice']);
 
     // `grunt dist --project=September+Newsletter`
+    grunt.registerTask('test', ['processhtml:test']);
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
     // `grunt archive --project=September+Newsletter`
