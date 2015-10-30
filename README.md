@@ -12,9 +12,15 @@ cd fmail-dev
 npm install
 ```
 
+## Files
+* For clarity, email projects are created in their own project folders within `src/` and generated to their own folders in `build/` and `dist/`.
+* Handlebars and Assemble are use for templating and SCSS is used to compile CSS, reducing the chance for errors, allowing focus on content, and making improvements easier to track.
+
 ## Workflow
 
 #### Create new project
+Create a new project folder in `src/` with with desired template and SCSS from `templates/`.
+
 <!--
 `grunt new` (assembles all templates into `src` directory)
 
@@ -23,20 +29,33 @@ npm install
 * generates working HTML document from template
 -->
 #### Develop email
-1. `grunt watch` watches for changes to HTML and SCSS files
-* `grunt watch --project=September-newsletter` watches specified project folder in `src`
-* running `grunt watch` from `src` directory allows auto completion on directory names
-2. Modify HTML and SCSS files in `src` directory, which will:
-	* Compile SCSS to CSS
-	* Inline CSS
-	* Remove certain tags and lines from source files
-3. Send tests (from `build` directory)
+##### Edit `.hbs` and `.scss` files in project folder
+
+##### Start `grunt watch` task to watch for changes
+Run `grunt watch --project=September-newsletter` to watch a specified project folder in `src/`. Running this task from the `src/` directory allows auto completion on directory names. This task will:
+* Generate `.html` from `.hbs` files
+* Compile `.scss` to `.css`, in `css/` directory of project
+* Create `.html` file with inlined CSS in `build/`
+
+##### Or run `grunt` to generate the files once
+Run `grunt --project=September-newsletter` to run `build` command once
+
+
+##### Send test emails
+`grunt test --project=September-Newsletter`
+* removes <head> and Subject Line (template-specific)
+* removes Google Analytics tracking image (template-specific)
 
 #### Finalize email for distribution
 `grunt dist --project=September-Newsletter`
+* removes <head> and Subject Line (template-specific)
+* replaces EMAILNAME Google Analytics tag with project name
+* enables Google Analytics tracking image by replacing '!img' with 'img'. (template-specific)
 
+<!--
 #### Archive assets to `archive` directory
 `grunt archive --project=September-Newsletter`
+-->
 
 ### Templates
 #### Not Supported by Email Service Provider
@@ -56,7 +75,6 @@ npm install
 * `scss` partials
 
 #### Project creation
-* add templates
 * copy `.scss` files to project folder
 
 #### Distribution
@@ -71,7 +89,6 @@ npm install
 * clean `build` (and `src`?) directory after archive (require task to make sure copy was successful)
 
 #### Maintenance and documentation
-* reconfigure todo and workflow list as checkboxes?
 * add requirements and setup information
 * test with `grunt-replace` v0.10.2
 * look into express server over livereload

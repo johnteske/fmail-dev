@@ -86,7 +86,7 @@ module.exports = function(grunt) {
 
         // compile CSS
         sass: {
-            dist: {
+            build: {
                 files: [{
                     expand: true,
                     cwd: '<%= paths.src %>',
@@ -239,10 +239,11 @@ module.exports = function(grunt) {
     // grunt.registerTask('new', ['assemble', 'open']);
 
     // `grunt`
-    grunt.registerTask('default', ['assemble', 'sass:dist', 'juice']);
+    grunt.registerTask('default', ['assemble', 'sass', 'juice']);
 
-    // `grunt dist --project=September+Newsletter`
+    // `grunt test --project=September+Newsletter`
     grunt.registerTask('test', ['processhtml:test']);
+    // `grunt dist --project=September+Newsletter`
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
     // `grunt archive --project=September+Newsletter`
