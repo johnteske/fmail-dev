@@ -225,7 +225,7 @@ module.exports = function(grunt) {
 
 
         concurrent: {
-            compile: ['assemble', 'sass']
+            compile: ['newer:assemble', 'newer:sass']
         }
 
 
