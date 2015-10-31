@@ -138,10 +138,7 @@ module.exports = function(grunt) {
         processhtml: {
             options: {
                 process: true,
-                strip: true,
-                data: {
-                    name: emailName // '<%= vars.test %>'
-                }
+                strip: true
             },
             // test
             test: {
