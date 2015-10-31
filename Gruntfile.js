@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-//    require('time-grunt')(grunt);
+    //require('time-grunt')(grunt);
 
     // project
     var project = grunt.option('project') || '';
@@ -221,7 +221,13 @@ module.exports = function(grunt) {
                 'no-write': false
             },
             build: ["<%= paths.build %>/**"]
+        },
+
+
+        concurrent: {
+            compile: ['assemble', 'sass']
         }
+
 
 
     }); // grunt.initConfig
@@ -238,7 +244,8 @@ module.exports = function(grunt) {
     // grunt.registerTask('new', ['assemble', 'open']);
 
     // `grunt`
-    grunt.registerTask('default', ['assemble', 'sass', 'juice']);
+    // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
+    grunt.registerTask('default', ['concurrent:compile', 'juice']);
 
     // `grunt test --project=September+Newsletter`
     grunt.registerTask('test', ['processhtml:test']);
