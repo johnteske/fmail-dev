@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+    var path = require('path');  // to get absolute path
     //require('time-grunt')(grunt);
 
     // project
@@ -122,19 +123,21 @@ module.exports = function(grunt) {
         },
 
 
-        // TODO create PDF for preview/archive
-        // wkhtmltopdf: {
-        //     dev: {
-        //         src: '<%= paths.src %>/*.html',
-        //         dest: '<%= paths.pdf %>/',
-        //         args: [
-        //             '--page-size', 'tabloid',
-        //             '--dpi', '144',
-        //             '--image-quality', '70',
-        //             '--zoom', '0.75'
-        //         ]
-        //     }
-        // },
+        exec: {
+            // create PDF for preview/archive
+            // open first build/ file in Paparazzi!
+            open_paparazzi: {
+                cmd: function() {
+                    // <%= paths.build %> template does not work
+                    // var thisFile = '<%= paths.build %>/*.html';
+
+                    var thisFile = 'build/' + project + '/*.html';
+                    thisFile = grunt.file.expand(thisFile)[0]; // first only
+                    thisFile = path.resolve(thisFile);
+                    return 'open ' + thisFile + ' -a Paparazzi!';
+                }
+            }
+        },
 
 
         processhtml: {
@@ -246,6 +249,9 @@ module.exports = function(grunt) {
     // `grunt`
     // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
     grunt.registerTask('default', ['concurrent:compile', 'juice']);
+
+    // `grunt pdf --project=September+Newsletter`
+    grunt.registerTask('pdf', ['exec:open_paparazzi']);
 
     // `grunt test --project=September+Newsletter`
     grunt.registerTask('test', ['processhtml:test']);
