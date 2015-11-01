@@ -246,7 +246,7 @@ module.exports = function(grunt) {
     // grunt.registerTask('new', ['json_generator', 'assemble', 'open']);
     // grunt.registerTask('new', ['assemble', 'open']);
 
-    // `grunt`
+    // `grunt --project=September+Newsletter`
     // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
     grunt.registerTask('default', ['concurrent:compile', 'juice']);
 
@@ -255,6 +255,7 @@ module.exports = function(grunt) {
 
     // `grunt test --project=September+Newsletter`
     grunt.registerTask('test', ['processhtml:test']);
+
     // `grunt dist --project=September+Newsletter`
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 

@@ -38,13 +38,17 @@ Run `grunt watch --project=September-newsletter` to watch a specified project fo
 * Create `.html` file with inlined CSS in `build/`
 
 ##### Or run `grunt` to generate the files once
-Run `grunt --project=September-newsletter` to run `build` command once
+Run `grunt --project=September-newsletter` to run `build` command once. Running `grunt` without passing a project parameter will process files in the `src/` folder.
 
 
-##### Send test emails
+##### Test emails
 `grunt test --project=September-Newsletter`
 * removes <head> and Subject Line (template-specific)
 * removes Google Analytics tracking image (template-specific)
+
+`grunt pdf --project=September-Newsletter`
+
+opens the first file found in `build/project-name` in [Paparazzi!](http://paparazzi.en.softonic.com/mac) for saving as a PDF and printing for review
 
 #### Finalize email for distribution
 `grunt dist --project=September-Newsletter`
