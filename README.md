@@ -60,9 +60,3 @@ opens the first file found in `build/project-name` in [Paparazzi!](http://papara
 `grunt archive --project=September-Newsletter`
 * copies files to `archive/` folder by default
 * can specify custom targets for HTML, PDF, and image files by modifying the defaults or creating a `private.json` file
-
-### Templates
-#### Not Supported by Email Service Provider
-
-* Multi-part MIME
-* `<head>`, `<style>`, `<body>`, `<vml>` tags
