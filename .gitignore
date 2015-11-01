@@ -11,4 +11,7 @@ templates
 src
 build
 dist
-xrchive
+archive
+
+# private user data
+private.json

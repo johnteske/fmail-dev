@@ -16,9 +16,18 @@ module.exports = function(grunt) {
     // send date
     var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
 
+    var priv_defaults = {
+        "archive": {
+            "html": "archive",
+            "pdf": "archive",
+            "img": "archive"
+        }
+    };
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        priv: grunt.file.exists('private.json') ? grunt.file.readJSON('private.json') : priv_defaults,
 
         paths: {
             templates: 'templates',
@@ -26,8 +35,8 @@ module.exports = function(grunt) {
             src: 'src/' + project,
             build: 'build/' + project,
             dist: 'dist/' + project,
-            archive: 'archive/' + project,
-            pdf: 'pdf', // eventually put pdfs in project folders
+            // archive: 'archive/' + project,
+            // pdf: 'pdf', // eventually put pdfs in project folders
             ignore: '_*.*' // ignore files with leading underscore
         },
 
@@ -51,24 +60,40 @@ module.exports = function(grunt) {
         // TODO copy scss files into project folders
         // TODO copy files into archive folders
         // folder name: project
-        // copy: {
-        //     project: {
-        //         files: [{
-        //             expand: true,
-        //             cwd: '<%= paths.src %>',
-        //             src: '<%= paths.src %>',
-        //             dest: '<%= paths.src %>'
-        //         }]
-        //     },
-        //     archive: {
-        //         files: [{
-        //             expand: true,
-        //             cwd: '<%= paths.src %>',
-        //             src: '*.html',
-        //             dest: '<%= paths.archive %>'
-        //         }]
-        //     }
-        // },
+        copy: {
+            // new_project: {
+            //     files: [{
+            //         expand: true,
+            //         cwd: '<%= paths.src %>',
+            //         src: '<%= paths.src %>',
+            //         dest: '<%= paths.src %>'
+            //     }]
+            // },
+            archive: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= paths.build %>',
+                        src: '*.html',
+                        dest: '<%= priv.archive.html %>/' + project
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= paths.build %>',
+                        src: '*.pdf',
+                        dest: '<%= priv.archive.pdf %>/' + project
+                    },
+                    {
+                    // will more likely be source folder
+                    // also ignore anything matching <%= paths.ignore %>
+                        expand: true,
+                        cwd: '<%= paths.build %>',
+                        src: '*.{gif,jpg,png,psd}',
+                        dest: '<%= priv.archive.img %>/' + project
+                    }
+                ]
+            },
+        },
 
 
         // create json data file (and project folder if needed)
@@ -260,6 +285,6 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
     // `grunt archive --project=September+Newsletter`
-    // grunt.registerTask('archive', ['copy:archive']);
+    grunt.registerTask('archive', ['copy:archive']);
 
 };

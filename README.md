@@ -56,10 +56,10 @@ opens the first file found in `build/project-name` in [Paparazzi!](http://papara
 * replaces EMAILNAME Google Analytics tag with project name
 * enables Google Analytics tracking image by replacing '!img' with 'img'. (template-specific)
 
-<!--
-#### Archive assets to `archive` directory
+#### Archive HTML, PDF, and image assets
 `grunt archive --project=September-Newsletter`
--->
+* copies files to `archive/` folder by default
+* can specify custom targets for HTML, PDF, and image files by modifying the defaults or creating a `private.json` file
 
 ### Templates
 #### Not Supported by Email Service Provider
