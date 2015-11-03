@@ -165,6 +165,23 @@ module.exports = function(grunt) {
         },
 
 
+        ftp_push: {
+            your_target: {
+                options: {
+                    authKey: "serverA",
+                    host: "ftp.johnteskemusic.com",
+                    dest: "/public_html/test/<%= grunt.template.today('yyyymm') %>",
+                    port: 21
+                },
+                files: [{
+                    expand: true,
+                    cwd: '<%= paths.src %>',
+                    src: [ "*.jpg", "*.gif" ]
+                }]
+            }
+        },
+
+
         processhtml: {
             options: {
                 process: true,
@@ -277,6 +294,9 @@ module.exports = function(grunt) {
 
     // `grunt pdf --project=September+Newsletter`
     grunt.registerTask('pdf', ['exec:open_paparazzi']);
+
+    // `grunt ftp --project=September+Newsletter`
+    grunt.registerTask('ftp', ['ftp_push']);
 
     // `grunt test --project=September+Newsletter`
     grunt.registerTask('test', ['processhtml:test']);
