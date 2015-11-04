@@ -14,10 +14,10 @@ module.exports = function(grunt) {
     var emailName = grunt.option('emailname') || project.replace(/-/g, "+");
 
     // which template to use on assemble
-    var template = grunt.option('template') || '*.hbs';
+    // var template = grunt.option('template') || '*.hbs';
 
     // send date
-    var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
+    // var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
 
     var priv_defaults = {
         "archive": {
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
         paths: {
             templates: 'templates',
-            template: template,
+            // template: template,
             src: 'src/' + project,
             build: 'build/' + project,
             dist: 'dist/' + project,
@@ -61,7 +61,6 @@ module.exports = function(grunt) {
 
 
         // TODO copy scss files into project folders
-        // TODO copy files into archive folders
         // folder name: project
         copy: {
             // new_project: {
@@ -276,7 +275,6 @@ module.exports = function(grunt) {
         concurrent: {
             compile: ['newer:assemble', 'newer:sass']
         }
-
 
 
     }); // grunt.initConfig
