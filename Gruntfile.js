@@ -7,8 +7,7 @@ module.exports = function(grunt) {
     var project = grunt.option('project') || '';
 
     // Google Analytics tag, to add in dist
-    //var emailName = grunt.option('emailname') || 'EMAILNAME';
-    var emailName = project.replace(/-/g, "+");
+    var emailName = grunt.option('emailname') || project.replace(/-/g, "+");
 
     // which template to use on assemble
     var template = grunt.option('template') || '*.hbs';
