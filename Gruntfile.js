@@ -258,13 +258,14 @@ module.exports = function(grunt) {
             }
         },
 
-        // clean the build directory
-        // TODO: also clean dist directory
+
+        // clean the build, dist directories
         clean: {
             options: {
                 'no-write': false
             },
-            build: ["<%= paths.build %>/**"]
+            build: ["<%= paths.build %>/**"],
+            build: ["<%= paths.dist %>/**"]
         },
 
 
