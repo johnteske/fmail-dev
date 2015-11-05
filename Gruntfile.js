@@ -240,14 +240,14 @@ module.exports = function(grunt) {
         watch: {
             templates: {
               files: ['<%= paths.templates %>/css/scss/*','<%= paths.src %>/*.hbs','<%= paths.templates %>/layouts/*','<%= paths.templates %>/partials/*','<%= paths.templates %>/data/*','<%= paths.templates %>/helpers/*'],
-              tasks: ['assemble'],
+              tasks: ['newer:assemble'],
               options: {
                   atBegin: true
               }
             },
             source: {
                 files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss', '!<%= paths.src %>/<%= paths.ignore %>'],
-                tasks: ['default'],
+                tasks: ['newer:sass', 'juice'], // tasks: ['default'],
                 options: {
                     spawn: false,
                     atBegin: true
