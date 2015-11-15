@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     // var template = grunt.option('template') || '*.hbs';
 
     // send date
-    // var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
+    var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
 
     var priv_defaults = {
         "archive": {
@@ -77,13 +77,13 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: '<%= paths.build %>',
                         src: '*.html',
-                        dest: '<%= priv.archive.html %>/' + project
+                        dest: '<%= priv.archive.html %>/' + sendDate + "-" + project
                     },
                     {
                         expand: true,
                         cwd: '<%= paths.build %>',
                         src: '*.pdf',
-                        dest: '<%= priv.archive.pdf %>/' + project
+                        dest: '<%= priv.archive.pdf %>/' + sendDate + "-" + project
                     },
                     {
                     // will more likely be source folder
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: '<%= paths.build %>',
                         src: '*.{gif,jpg,png,psd}',
-                        dest: '<%= priv.archive.img %>/' + project
+                        dest: '<%= priv.archive.img %>/' + sendDate + "-" + project
                     }
                 ]
             },
