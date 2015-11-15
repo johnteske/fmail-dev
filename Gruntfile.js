@@ -268,7 +268,7 @@ module.exports = function(grunt) {
                 'no-write': false
             },
             build: ["<%= paths.build %>/**"],
-            build: ["<%= paths.dist %>/**"]
+            dist: ["<%= paths.dist %>/**"]
         },
 
 
@@ -307,6 +307,6 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
     // `grunt archive --project=September+Newsletter`
-    grunt.registerTask('archive', ['copy:archive']);
+    grunt.registerTask('archive', ['copy:archive', 'clean']);
 
 };
