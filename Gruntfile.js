@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+    var fs = require('fs');
     var path = require('path');  // to get absolute path
     //require('time-grunt')(grunt);
 
@@ -308,5 +309,20 @@ module.exports = function(grunt) {
 
     // `grunt archive --project=September+Newsletter`
     grunt.registerTask('archive', ['copy:archive', 'clean']);
+
+    // `grunt yfm --project=September+Newsletter`
+    grunt.registerTask('yfm', function() {
+        var srcFile = grunt.config.get('paths.src') + '/email.hbs';
+        var data = '';
+        // try to read .hbs file to extract YFM
+        try {
+            data = fs.readFileSync(srcFile, "utf-8");//, function(err) { console.log(err) });
+        }
+        // if error, continue and use other fallbacks
+        catch(err) { grunt.log.warn(err); }
+
+        console.log(data.toString());
+
+    });
 
 };
