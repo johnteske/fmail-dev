@@ -312,16 +312,27 @@ module.exports = function(grunt) {
 
     // `grunt yfm --project=September+Newsletter`
     grunt.registerTask('yfm', function() {
-        var srcFile = grunt.config.get('paths.src') + '/email.hbs';
-        var data = '';
-        // try to read .hbs file to extract YFM
-        try {
-            data = fs.readFileSync(srcFile, "utf-8");//, function(err) { console.log(err) });
-        }
-        // if error, continue and use other fallbacks
-        catch(err) { grunt.log.warn(err); }
 
-        console.log(data.toString());
+        // get .hbs files but ignore files that start with an underscore
+        var projSrc = grunt.config.get('paths.src');
+        var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
+        var srcFile = projSrc + hbsFiles[0];
+
+        if(srcFile) {
+            console.log("yes");
+    
+            var data = '';
+            // try to read .hbs file to extract YFM
+            try {
+                // here is where emailname would be extracted
+                data = fs.readFileSync(srcFile, "utf-8");//, function(err) { console.log(err) });
+            }
+            // if error, continue and use other fallbacks
+            catch(err) { grunt.log.warn(err); }
+
+            console.log(data.toString());
+        // grunt.option('emailname')
+        }
 
     });
 
