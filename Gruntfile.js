@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-    var fs = require('fs');
+    // var fs = require('fs');
     var path = require('path');  // to get absolute path
     //require('time-grunt')(grunt);
 
@@ -319,13 +319,13 @@ module.exports = function(grunt) {
         var srcFile = projSrc + hbsFiles[0];
 
         if(srcFile) {
-            console.log("yes");
+            console.log( "yes" );
     
             var data = '';
             // try to read .hbs file to extract YFM
             try {
                 // here is where emailname would be extracted
-                data = fs.readFileSync(srcFile, "utf-8");//, function(err) { console.log(err) });
+                data = grunt.file.read(srcFile, "utf-8");//, function(err) { console.log(err) });
             }
             // if error, continue and use other fallbacks
             catch(err) { grunt.log.warn(err); }
