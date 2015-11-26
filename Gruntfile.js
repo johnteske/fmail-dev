@@ -305,7 +305,7 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['processhtml:test']);
 
     // `grunt dist --project=September+Newsletter`
-    grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
+    grunt.registerTask('dist', ['yfm', 'processhtml:dist', 'replace:dist']);
 
     // `grunt archive --project=September+Newsletter`
     grunt.registerTask('archive', ['copy:archive', 'clean']);
@@ -316,23 +316,23 @@ module.exports = function(grunt) {
         // get .hbs files but ignore files that start with an underscore
         var projSrc = grunt.config.get('paths.src');
         var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
-        var srcFile = projSrc + hbsFiles[0];
+        var srcFile = projSrc + "/" + hbsFiles[0];
+        var data = '';
 
-        if(srcFile) {
-            console.log( "yes" );
-    
-            var data = '';
-            // try to read .hbs file to extract YFM
-            try {
-                // here is where emailname would be extracted
-                data = grunt.file.read(srcFile, "utf-8");//, function(err) { console.log(err) });
+        if(grunt.file.exists(srcFile)) { // console.log(srcFile);
+
+            // read file, get 'emailname:' line
+            var hbsF = grunt.file.read(srcFile, "utf-8");
+            hbsF = /emailname:[ \S]*/.exec(hbsF);
+
+            if(hbsF != null) {
+                data = hbsF.toString();
+                data = data.replace(/emailname: ?/i, ""); //.replace(/-/g, "+")
             }
-            // if error, continue and use other fallbacks
-            catch(err) { grunt.log.warn(err); }
-
-            console.log(data.toString());
-        // grunt.option('emailname')
         }
+
+        if(data == '') { grunt.log.warn("emailname not found in .hbs front matter") }
+        else { console.log(data); emailName = data; grunt.option('emailname', data); } // grunt.option('emailname')
 
     });
 
