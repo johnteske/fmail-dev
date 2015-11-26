@@ -1,13 +1,13 @@
 module.exports = function(grunt) {
 
-    var path = require('path');  // to get absolute path
+    var path = require('path'); // to get absolute path
     //require('time-grunt')(grunt);
 
     // project
     function checkProj() {
-        if ( grunt.option('force') ) { return '' }
-        else { grunt.fail.warn('Please specify project folder.') };
-    };
+        if ( grunt.option('force') ) { return ''; }
+        else { grunt.fail.warn('Please specify project folder.'); }
+    }
     var project = grunt.option('project') || checkProj();
 
     function checkEmailName() {
@@ -23,14 +23,14 @@ module.exports = function(grunt) {
             var hbsF = grunt.file.read(srcFile, "utf-8");
             hbsF = /emailname:[ \S]*/.exec(hbsF);
 
-            if (hbsF != null) {
+            if (hbsF !== null) {
                 data = hbsF.toString();
-                data = data.replace(/emailname: ?/i, ""); //.replace(/-/g, "+") // further filtering needed?
+                data = data.replace(/emailname: ?/i, ""); // .replace(/-/g, "+") // further filtering needed?
             }
         }
 
-        if (data != '') { return data }
-        else { grunt.log.warn("emailname not found in .hbs front matter, using project name") }
+        if (data !== '') { return data; }
+        else { grunt.log.warn("emailname not found in .hbs front matter, using project name"); }
 
     }
 
@@ -347,13 +347,13 @@ module.exports = function(grunt) {
             var hbsF = grunt.file.read(srcFile, "utf-8");
             hbsF = hbsF.match(/href.*"/g);
 
-            if (hbsF != null) {
+            if (hbsF !== null) {
                 data = hbsF;//.toString();
             }
         }
 
-        if (data != '') { console.log(data) } //return data }
-        else { grunt.log.warn("no links found") }
+        if (data !== '') { console.log(data); } //return data }
+        else { grunt.log.warn("no links found"); }
     });
 
 };
