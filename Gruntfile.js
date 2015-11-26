@@ -1,6 +1,5 @@
 module.exports = function(grunt) {
 
-    // var fs = require('fs');
     var path = require('path');  // to get absolute path
     //require('time-grunt')(grunt);
 
@@ -11,8 +10,32 @@ module.exports = function(grunt) {
     };
     var project = grunt.option('project') || checkProj();
 
+    function checkEmailName() {
+        // get .hbs files but ignore files that start with an underscore
+        var projSrc = 'src/' + project; //grunt.config.get('paths.src');
+        var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
+        var srcFile = projSrc + "/" + hbsFiles[0];
+        var data = '';
+
+        if (grunt.file.exists(srcFile)) { // console.log(srcFile);
+
+            // read file, get 'emailname:' line
+            var hbsF = grunt.file.read(srcFile, "utf-8");
+            hbsF = /emailname:[ \S]*/.exec(hbsF);
+
+            if (hbsF != null) {
+                data = hbsF.toString();
+                data = data.replace(/emailname: ?/i, ""); //.replace(/-/g, "+") // further filtering needed?
+            }
+        }
+
+        if (data != '') { return data }
+        else { grunt.log.warn("emailname not found in .hbs front matter, using project name") }
+
+    }
+
     // Google Analytics tag, to add in dist
-    var emailName = grunt.option('emailname') || project.replace(/-/g, "+").replace(/\//, '');
+    var emailName = grunt.option('emailname') || checkEmailName() || project.replace(/-/g, "+").replace(/\//, '');
 
     // which template to use on assemble
     // var template = grunt.option('template') || '*.hbs';
@@ -305,35 +328,10 @@ module.exports = function(grunt) {
     grunt.registerTask('test', ['processhtml:test']);
 
     // `grunt dist --project=September+Newsletter`
-    grunt.registerTask('dist', ['yfm', 'processhtml:dist', 'replace:dist']);
+    grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
     // `grunt archive --project=September+Newsletter`
     grunt.registerTask('archive', ['copy:archive', 'clean']);
 
-    // `grunt yfm --project=September+Newsletter`
-    grunt.registerTask('yfm', function() {
-
-        // get .hbs files but ignore files that start with an underscore
-        var projSrc = grunt.config.get('paths.src');
-        var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
-        var srcFile = projSrc + "/" + hbsFiles[0];
-        var data = '';
-
-        if(grunt.file.exists(srcFile)) { // console.log(srcFile);
-
-            // read file, get 'emailname:' line
-            var hbsF = grunt.file.read(srcFile, "utf-8");
-            hbsF = /emailname:[ \S]*/.exec(hbsF);
-
-            if(hbsF != null) {
-                data = hbsF.toString();
-                data = data.replace(/emailname: ?/i, ""); //.replace(/-/g, "+")
-            }
-        }
-
-        if(data == '') { grunt.log.warn("emailname not found in .hbs front matter") }
-        else { console.log(data); emailName = data; grunt.option('emailname', data); } // grunt.option('emailname')
-
-    });
 
 };
