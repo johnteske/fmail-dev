@@ -334,4 +334,26 @@ module.exports = function(grunt) {
     grunt.registerTask('archive', ['copy:archive', 'clean']);
 
 
+    grunt.registerTask('comb', 'Comb through links to help catch errors', function() {
+        console.log("combing!");
+        console.log(project);
+        var projSrc = 'build/' + project; //grunt.config.get('paths.src'); // check build, so either hbs or html is ok to build with
+        var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.html','!_*.*'] );
+        var srcFile = projSrc + "/" + hbsFiles[0]; // get first
+        var data = '';
+
+        if (grunt.file.exists(srcFile)) { // console.log(srcFile);
+            // read file, get 'emailname:' line
+            var hbsF = grunt.file.read(srcFile, "utf-8");
+            hbsF = hbsF.match(/href.*"/g);
+
+            if (hbsF != null) {
+                data = hbsF;//.toString();
+            }
+        }
+
+        if (data != '') { console.log(data) } //return data }
+        else { grunt.log.warn("no links found") }
+    });
+
 };
