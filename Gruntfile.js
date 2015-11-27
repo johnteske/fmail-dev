@@ -10,6 +10,17 @@ module.exports = function(grunt) {
     }
     var project = grunt.option('project') || checkProj();
 
+    var paths = { // specify here to allow use in functions outside of grunt config
+        templates: 'templates',
+        // template: template,
+        src: 'src/' + project,
+        build: 'build/' + project,
+        dist: 'dist/' + project,
+        // archive: 'archive/' + project,
+        // pdf: 'pdf', // eventually put pdfs in project folders
+        ignore: '_*.*' // ignore files with leading underscore
+    };
+
     function checkEmailName() {
         // get .hbs files but ignore files that start with an underscore
         var projSrc = 'src/' + project; //grunt.config.get('paths.src');
@@ -56,16 +67,16 @@ module.exports = function(grunt) {
 
         priv: grunt.file.exists('private.json') ? grunt.file.readJSON('private.json') : priv_defaults,
 
-        paths: {
-            templates: 'templates',
-            // template: template,
-            src: 'src/' + project,
-            build: 'build/' + project,
-            dist: 'dist/' + project,
-            // archive: 'archive/' + project,
-            // pdf: 'pdf', // eventually put pdfs in project folders
-            ignore: '_*.*' // ignore files with leading underscore
-        },
+        paths: paths,// {
+        //     templates: 'templates',
+        //     // template: template,
+        //     src: 'src/' + project,
+        //     build: 'build/' + project,
+        //     dist: 'dist/' + project,
+        //     // archive: 'archive/' + project,
+        //     // pdf: 'pdf', // eventually put pdfs in project folders
+        //     ignore: '_*.*' // ignore files with leading underscore
+        // },
 
 
         // assemble email templates
