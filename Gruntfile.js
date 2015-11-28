@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
 
     var path = require('path'); // to get absolute path
-    //require('time-grunt')(grunt);
 
     // project
     function checkProj() {
@@ -12,18 +11,18 @@ module.exports = function(grunt) {
 
     var paths = { // specify here to allow use in functions outside of grunt config
         templates: 'templates',
-        // template: template,
         src: 'src/' + project,
         build: 'build/' + project,
         dist: 'dist/' + project,
-        // archive: 'archive/' + project,
+        // archive: 'archive/', // add project and sendDate in task
         // pdf: 'pdf', // eventually put pdfs in project folders
         ignore: '_*.*' // ignore files with leading underscore
     };
 
+    // emailName: Google Analytics tag, to add in dist
     function checkEmailName() {
-        // get .hbs files but ignore files that start with an underscore
-        var projSrc = 'src/' + project; //grunt.config.get('paths.src');
+        // get .hbs files, ignore files that start with an underscore
+        var projSrc = paths.src;
         var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
         var srcFile = projSrc + "/" + hbsFiles[0];
         var data = '';
@@ -35,8 +34,7 @@ module.exports = function(grunt) {
             hbsF = /emailname:[ \S]*/.exec(hbsF);
 
             if (hbsF !== null) {
-                data = hbsF.toString();
-                data = data.replace(/emailname: ?/i, ""); // .replace(/-/g, "+") // further filtering needed?
+                data = hbsF.toString().replace(/emailname: ?/i, ""); // .replace(/-/g, "+") // further filtering needed?
             }
         }
 
@@ -44,12 +42,7 @@ module.exports = function(grunt) {
         else { grunt.log.warn("emailname not found in .hbs front matter, using project name"); }
 
     }
-
-    // Google Analytics tag, to add in dist
     var emailName = grunt.option('emailname') || checkEmailName() || project.replace(/-/g, "+").replace(/\//, '');
-
-    // which template to use on assemble
-    // var template = grunt.option('template') || '*.hbs';
 
     // send date
     var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
@@ -224,7 +217,7 @@ module.exports = function(grunt) {
                 process: true,
                 strip: true
             },
-            // test
+            // remove GA tracking pixel
             test: {
                 files: [{
                     expand: true,
@@ -234,7 +227,7 @@ module.exports = function(grunt) {
                     ext: '.html'
                 }]
             },
-            // clean the built files, put in dist folder
+            // include GA tracking pixel
             dist: {
                 files: [{
                     expand: true,
@@ -321,36 +314,28 @@ module.exports = function(grunt) {
     // load all Grunt tasks
     require('load-grunt-tasks')(grunt);
 
-    // `grunt new`
+
     // grunt.registerTask('new', ['json_generator', 'assemble', 'open']);
     // grunt.registerTask('new', ['assemble', 'open']);
 
-    // `grunt --project=September+Newsletter`
     // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
     grunt.registerTask('default', ['concurrent:compile', 'juice']);
 
-    // `grunt pdf --project=September+Newsletter`
     grunt.registerTask('pdf', ['exec:open_paparazzi']);
 
-    // `grunt ftp --project=September+Newsletter`
     grunt.registerTask('ftp', ['ftp_push']);
 
-    // `grunt test --project=September+Newsletter`
     grunt.registerTask('test', ['processhtml:test']);
 
-    // `grunt dist --project=September+Newsletter`
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
-    // `grunt archive --project=September+Newsletter`
     grunt.registerTask('archive', ['copy:archive', 'clean']);
 
 
-    grunt.registerTask('comb', 'Comb through links to help catch errors', function() {
-        console.log("combing!");
-        console.log(project);
-        var projSrc = 'build/' + project; //grunt.config.get('paths.src'); // check build, so either hbs or html is ok to build with
+    grunt.registerTask('comb', 'Display links to check urls and analytics tags', function() {
+        var projSrc = paths.build; // check build dir, so .hbs file is not required in development
         var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.html','!_*.*'] );
-        var srcFile = projSrc + "/" + hbsFiles[0]; // get first
+        var srcFile = projSrc + "/" + hbsFiles[0]; // get first file
         var data = '';
 
         if (grunt.file.exists(srcFile)) { // console.log(srcFile);
@@ -359,11 +344,11 @@ module.exports = function(grunt) {
             hbsF = hbsF.match(/href.*"/g);
 
             if (hbsF !== null) {
-                data = hbsF;//.toString();
+                data = hbsF; // .toString();
             }
         }
 
-        if (data !== '') { console.log(data); } //return data }
+        if (data !== '') { console.log(data); } // return data }
         else { grunt.log.warn("no links found"); }
     });
 
