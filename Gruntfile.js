@@ -348,7 +348,7 @@ module.exports = function(grunt) {
             }
         }
 
-        if (data !== '') { console.log(data); } // return data }
+        if (data !== '') { console.log(data); console.log(data.length + " links found.") } // return data }
         else { grunt.log.warn("no links found"); }
     });
 
