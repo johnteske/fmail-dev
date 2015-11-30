@@ -60,16 +60,7 @@ module.exports = function(grunt) {
 
         priv: grunt.file.exists('private.json') ? grunt.file.readJSON('private.json') : priv_defaults,
 
-        paths: paths,// {
-        //     templates: 'templates',
-        //     // template: template,
-        //     src: 'src/' + project,
-        //     build: 'build/' + project,
-        //     dist: 'dist/' + project,
-        //     // archive: 'archive/' + project,
-        //     // pdf: 'pdf', // eventually put pdfs in project folders
-        //     ignore: '_*.*' // ignore files with leading underscore
-        // },
+        paths: paths,
 
 
         // assemble email templates
