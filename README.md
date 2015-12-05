@@ -4,6 +4,7 @@ Streamlining HTML email development using Grunt
 ### Requirements
 * [Node.js](https://nodejs.org/)
 * [Grunt-cli and Grunt](http://gruntjs.com/)
+* [ImageMagick command line tools](http://www.imagemagick.org/) (optional)
 
 ### Set up
 ```
