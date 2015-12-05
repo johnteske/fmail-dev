@@ -186,6 +186,13 @@ module.exports = function(grunt) {
         },
 
 
+        "imagemagick-convert": {
+            logo:{
+                args:['<%= paths.templates %>/assets/logo-2015.png', '-background', '#00dd00', '-alpha', 'remove', '<%= paths.src %>/logo.jpg' ]
+            }
+        },
+
+
         ftp_push: {
             your_target: {
                 options: {
