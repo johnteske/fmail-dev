@@ -188,7 +188,7 @@ module.exports = function(grunt) {
 
         "imagemagick-convert": {
             logo:{
-                args:['<%= paths.templates %>/assets/logo-2015.png', '-background', '#00dd00', '-alpha', 'remove', '<%= paths.src %>/logo.jpg' ]
+                args:['<%= paths.templates %>/assets/logo-2015.png', '-background', '#8a7a56', '-alpha', 'remove', '<%= paths.src %>/logo.jpg' ]
             }
         },
 
@@ -328,6 +328,8 @@ module.exports = function(grunt) {
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
     grunt.registerTask('archive', ['copy:archive', 'clean']);
+
+    grunt.registerTask('logo', ['imagemagick-convert:logo']);
 
 
     grunt.registerTask('comb', 'Display links to check urls and analytics tags', function() {
