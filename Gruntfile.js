@@ -4,10 +4,21 @@ module.exports = function(grunt) {
 
     // project
     function checkProj() {
-        if ( grunt.option('force') ) { return ''; }
-        else { grunt.fail.warn('Please specify project folder.'); }
+        var proj = grunt.option('project');
+        if (proj) { console.log( grunt.option('project') );
+            if (!grunt.file.exists('src/' + proj)) {
+                grunt.fail.fatal('Project folder does not exist.\nTry running commands from the src/ directory to use auto-complete on folder names.')
+            }
+            else {
+                return proj;
+            }
+        }
+        else {
+            if ( grunt.option('force') ) { return ''; }
+            else { grunt.fail.warn('Please specify project folder.'); }
+        }
     }
-    var project = grunt.option('project') || checkProj();
+    var project = checkProj();
 
     var paths = { // specify here to allow use in functions outside of grunt config
         templates: 'templates',
