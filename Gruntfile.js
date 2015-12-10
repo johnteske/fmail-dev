@@ -117,22 +117,6 @@ module.exports = function(grunt) {
         },
 
 
-        // create json data file (and project folder if needed)
-        // json_generator: {
-        //     target: {
-        //         dest: '<%= paths.src %>/project.json',
-        //         options: {
-        //             project: project,
-        //             emailName: emailName,
-        //             sendDate: sendDate,
-        //             subjectline: "",
-        //             recipients: "", // who
-        //             number: 0 // how many
-        //         }
-        //     }
-        // },
-
-
         // compile CSS
         sass: {
             build: {
@@ -313,7 +297,6 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
 
-    // grunt.registerTask('new', ['json_generator', 'assemble', 'open']);
     // grunt.registerTask('new', ['assemble', 'open']);
 
     // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
