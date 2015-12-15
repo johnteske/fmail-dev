@@ -55,8 +55,9 @@ module.exports = function(grunt) {
     }
     var emailName = grunt.option('emailname') || checkEmailName() || project.replace(/-/g, "+").replace(/\//, '');
 
-    // send date
+    // archive
     var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
+    var archivePrepend = sendDate + "-";
 
     var priv_defaults = {
         "archive": {
@@ -107,21 +108,25 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: '<%= paths.build %>',
                         src: '*.html',
-                        dest: '<%= priv.archive.html %>/' + sendDate + "-" + project
+                        dest: '<%= priv.archive.html %>/' + archivePrepend,
+                        rename: function(dest, src) {
+                            return dest + archivePrepend + src;
+                        }
                     },
                     {
                         expand: true,
                         cwd: '<%= paths.build %>',
                         src: '*.pdf',
-                        dest: '<%= priv.archive.pdf %>/' + sendDate + "-" + project
+                        dest: '<%= priv.archive.html %>/' + archivePrepend,
+                        rename: function(dest, src) {
+                            return dest + archivePrepend + src;
+                        }
                     },
                     {
-                    // will more likely be source folder
-                    // also ignore anything matching <%= paths.ignore %>
                         expand: true,
-                        cwd: '<%= paths.build %>',
-                        src: '*.{gif,jpg,png,psd}',
-                        dest: '<%= priv.archive.img %>/' + sendDate + "-" + project
+                        cwd: '<%= paths.src %>',
+                        src: ['*.{gif,jpg,png,psd}', '!<%= paths.ignore %>'],
+                        dest: '<%= priv.archive.img %>/' + archivePrepend + project
                     }
                 ]
             },
