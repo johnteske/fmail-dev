@@ -22,6 +22,7 @@
     "grunt-open": "^0.2.3",
     "grunt-processhtml": "^0.3.8",
     "grunt-replace": "^0.11.0",
+    "handlebars-helper-include": "^0.2.0",
     "load-grunt-tasks": "^3.3.0"
   }
 }

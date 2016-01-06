@@ -80,7 +80,8 @@ module.exports = function(grunt) {
             options: {
                 layoutdir: '<%= paths.templates %>/layouts',
                 partials: ['<%= paths.templates %>/partials/**/*.hbs'],
-                helpers: ['<%= paths.templates %>/helpers/**/*.js'],
+                helpers: ['<%= paths.templates %>/helpers/**/*.js', 'handlebars-helper-include'],
+                includes: ['<%= paths.src %>/*.hbs'],
                 data: ['<%= paths.templates %>/data/*.{json,yml}'],
                 flatten: true
             },
