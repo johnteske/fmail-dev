@@ -105,22 +105,31 @@ module.exports = function(grunt) {
             // },
             archive: {
                 files: [
-                    {
+                    {   // save build files for conversion to pdf
                         expand: true,
                         cwd: '<%= paths.build %>',
                         src: '*.html',
                         dest: '<%= priv.archive.html %>/' + archivePrepend,
                         rename: function(dest, src) {
-                            return dest + archivePrepend + src;
+                            return dest + 'make_pdf-' + src;
                         }
                     },
-                    {
+                    // {
+                    //     expand: true,
+                    //     cwd: '<%= paths.build %>',
+                    //     src: '*.pdf',
+                    //     dest: '<%= priv.archive.html %>/' + archivePrepend,
+                    //     rename: function(dest, src) {
+                    //         return dest + archivePrepend + src;
+                    //     }
+                    // },
+                    {   // save dist files for HTML archive
                         expand: true,
-                        cwd: '<%= paths.build %>',
-                        src: '*.pdf',
+                        cwd: '<%= paths.dist %>',
+                        src: '*.html',
                         dest: '<%= priv.archive.html %>/' + archivePrepend,
                         rename: function(dest, src) {
-                            return dest + archivePrepend + src;
+                            return dest + src;
                         }
                     },
                     {
@@ -327,7 +336,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
 
-    grunt.registerTask('archive', ['copy:archive', 'clean']);
+    grunt.registerTask('archive', ['copy:archive']); // 'clean'
 
     grunt.registerTask('logo', ['imagemagick-convert:logo']);
 
