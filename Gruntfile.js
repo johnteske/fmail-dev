@@ -383,12 +383,13 @@ module.exports = function(grunt) {
         if (grunt.file.exists(srcFile)) { // console.log(srcFile);
             // read file, get 'emailname:' line
             var hbsF = grunt.file.read(srcFile, "utf-8");
-            hbsF = hbsF.match(/href.*"/g);
+            hbsF = hbsF.match(/href="([^"]*)"/g);
 
             if (hbsF !== null) {
                 data = hbsF; // .toString();
             }
         }
+        //else "file not found"
 
         if (data !== '') { console.log(data); console.log(data.length + " links found.") } // return data }
         else { grunt.log.warn("no links found"); }
