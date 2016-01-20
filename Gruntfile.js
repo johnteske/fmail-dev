@@ -49,15 +49,48 @@ module.exports = function(grunt) {
             }
         }
 
-        if (data !== '') { return data; }
-        else { grunt.log.warn("emailname not found in .hbs front matter, using project name"); }
-
+        if (data !== '') {
+          return data;
+        }
+        else {
+          var projName = project.replace(/-/g, "+").replace(/\//, '');
+          grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.");
+          return projName;
+        }
     }
-    var emailName = grunt.option('emailname') || checkEmailName() || project.replace(/-/g, "+").replace(/\//, '');
+    var emailName = grunt.option('emailname') || checkEmailName();
+    grunt.log.ok("\'emailname:\' " + emailName);
 
     // archive
     var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
     var archivePrepend = sendDate + "-";
+
+    // function checkColor() {
+    //     // get .scss files, ignore files that start with an underscore
+    //     var projSrc = paths.src;
+    //     var scssFiles = grunt.file.expand( {cwd: projSrc}, ['*.scss','!_*.*'] ); //console.log(scssFiles)
+    //     var srcFile = projSrc + "/" + scssFiles[0];
+    //     var data = '';
+    //
+    //     if (grunt.file.exists(srcFile)) { //console.log(srcFile);
+    //
+    //         // read file, get 'emailname:' line
+    //         var scssF = grunt.file.read(srcFile, "utf-8");
+    //         scssF = /\$main-color:[ \S]*/.exec(scssF);
+    //
+    //         if (scssF !== null) {
+    //             data = scssF.toString().replace(/\$main-color: ?/i, "").replace(';',''); // .replace(/-/g, "+") // further filtering needed?
+    //         }
+    //     }
+    //
+    //     if (data !== '') {
+    //       // grunt.log.warn( data );
+    //       return data;
+    //     }
+    //     else { grunt.log.warn("$main-color not found"); }
+    //     // TODO: put project fallback here, can print either passed or fallback project name to console
+    // }
+    var color = '#2c8eea'; //checkColor() ||
 
     var priv_defaults = {
         "archive": {
@@ -198,7 +231,7 @@ module.exports = function(grunt) {
 
         "imagemagick-convert": {
             logo:{
-                args:['<%= paths.templates %>/assets/logo-2015.png', '-background', '#8a7a56', '-alpha', 'remove', '<%= paths.src %>/logo.jpg' ]
+                args:['<%= paths.templates %>/assets/logo-2015.png', '-background', color, '-alpha', 'remove', '<%= paths.src %>/logo-' + color.replace('#','') + '.jpg' ]
             }
         },
 
