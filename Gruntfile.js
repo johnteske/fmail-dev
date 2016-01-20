@@ -231,7 +231,10 @@ module.exports = function(grunt) {
 
         "imagemagick-convert": {
             logo:{
-                args:['<%= paths.templates %>/assets/logo-2015.png', '-background', color, '-alpha', 'remove', '<%= paths.src %>/logo-' + color.replace('#','') + '.jpg' ]
+                args:[
+                  '<%= paths.templates %>/assets/logo-2015.png', '-background', color, '-alpha', 'remove', '-resize', '290',
+                  '<%= paths.src %>/logo-' + color.replace('#','') + '.jpg'
+                ]
             }
         },
 
