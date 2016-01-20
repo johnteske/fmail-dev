@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         }
         else {
             if ( grunt.option('force') ) { return ''; }
-            else { grunt.fail.warn('Please specify project folder.'); }
+            else { grunt.fail.warn('Please specify project folder by using \'--project=Project-Folder-Name\''); }
         }
     }
     var project = checkProj();
