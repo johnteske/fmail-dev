@@ -42,10 +42,10 @@ module.exports = function(grunt) {
 
             // read file, get 'emailname:' line
             var hbsF = grunt.file.read(srcFile, "utf-8");
-            hbsF = /emailname:[ \S]*/.exec(hbsF);
+            hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
 
             if (hbsF !== null) {
-                data = hbsF.toString().replace(/emailname: ?/i, ""); // .replace(/-/g, "+") // further filtering needed?
+                data = hbsF.toString().replace(/(\s*)emailname: ?/i, ""); // .replace(/-/g, "+") // further filtering needed?
             }
         }
 
