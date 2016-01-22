@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     // project
     function checkProj() {
-        var proj = grunt.option('project');
+        var proj = grunt.option('p') || grunt.option('project');
         if (proj) {
             if (!grunt.file.exists('src/' + proj)) {
                 grunt.fail.fatal('Project folder does not exist.\nTry running commands from the src/ directory to use auto-complete on folder names.')
