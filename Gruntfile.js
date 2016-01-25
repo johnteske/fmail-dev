@@ -43,9 +43,8 @@ module.exports = function(grunt) {
             // read file, get 'emailname:' line
             var hbsF = grunt.file.read(srcFile, "utf-8");
             hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
-
             if (hbsF !== null) {
-                data = hbsF.toString().replace(/(\s*)emailname: ?/i, ""); // .replace(/-/g, "+") // further filtering needed?
+                data = hbsF.toString().replace(/(\s*)emailname: ?/i, "").replace(/,/g, "") // quick fix to remove trailing comma
             }
         }
 
