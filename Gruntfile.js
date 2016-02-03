@@ -132,7 +132,10 @@ module.exports = function(grunt) {
                     expand: true,
                     flatten: true,
                     cwd: '<%= paths.templates %>',
-                    src: ['css/*.scss', '!css/<%= paths.ignore %>'],
+                    src: [
+                        'css/*.scss', '!css/<%= paths.ignore %>',
+                        'emails/*.hbs'
+                    ],
                     dest: '<%= paths.src %>'
                 }]
             },
