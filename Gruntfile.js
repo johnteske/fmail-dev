@@ -127,14 +127,15 @@ module.exports = function(grunt) {
         // TODO copy scss files into project folders
         // folder name: project
         copy: {
-            // new_project: {
-            //     files: [{
-            //         expand: true,
-            //         cwd: '<%= paths.src %>',
-            //         src: '<%= paths.src %>',
-            //         dest: '<%= paths.src %>'
-            //     }]
-            // },
+            new: {
+                files: [{
+                    expand: true,
+                    flatten: true,
+                    cwd: '<%= paths.templates %>',
+                    src: ['css/*.scss', '!css/<%= paths.ignore %>'],
+                    dest: '<%= paths.src %>'
+                }]
+            },
             archive: {
                 files: [
                     {   // save build files for conversion to pdf
@@ -192,7 +193,7 @@ module.exports = function(grunt) {
         // inline CSS
         juice: {
             options: {
-                widthElements: ['table', 'td', 'img'],
+                widthElements: ['table', 'td', 'img'], // heightElements: ['img'], // this seems to be a juice option--is it available in grunt-juice?
                 applyWidthAttributes: true,
                 webResources: {
                     images: false
@@ -358,7 +359,7 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
 
-    // grunt.registerTask('new', ['assemble', 'open']);
+    grunt.registerTask('new', ['copy:new']);
 
     // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
     grunt.registerTask('default', ['concurrent:compile', 'juice']);
