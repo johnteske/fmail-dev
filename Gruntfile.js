@@ -291,6 +291,7 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     patterns: [
+                        { match: /\sclass=["'][\w \-]*['"]/g, replacement: '' },
                         { match: 'EMAILNAME', replacement: emailName },
                         { match: '!img', replacement: 'img' }
                     ],
