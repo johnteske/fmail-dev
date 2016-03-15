@@ -316,32 +316,40 @@ module.exports = function(grunt) {
 
     // emailName: Google Analytics tag, to add in dist
     function checkEmailName() {
-        grunt.config.set('emailtest', 'EMAIL_TEST');
-        // // get .hbs files, ignore files that start with an underscore
-        // var projSrc = paths.src;
-        // var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
-        // var srcFile = projSrc + "/" + hbsFiles[0];
-        // var data = '';
-        //
-        // if (grunt.file.exists(srcFile)) { // console.log(srcFile);
-        //
-        //                 // read file, get 'emailname:' line
-        //                 var hbsF = grunt.file.read(srcFile, "utf-8");
-        //                 hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
-        //                 if (hbsF !== null) {
-        //                                 data = hbsF.toString().replace(/(\s*)emailname: ?/i, "").replace(/,/g, "") // quick fix to remove trailing comma
-        //                 }
-        // }
-        //
-        // if (data !== '') {
-        //         return data;
-        // }
-        // else {
-        //         var projName = project.replace(/-/g, "+").replace(/\//, '');
-        //         grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.");
-        //         return projName;
-        // }
-        grunt.log.ok("\'emailname:\' " + grunt.config.get('emailtest') + emailName);
+        var emailstring = "emailname: ";
+
+        if (grunt.config.get('emailtest')) {
+            // if --emailname is passed, use it
+            grunt.log.ok(emailstring + grunt.config.get('emailtest'));
+        }
+        else {
+            // if no --emailname passed, check the source .hbs files
+            var projSrc = paths.src;
+            var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
+            var firstFile = projSrc + "/" + hbsFiles[0];
+            var newemail = '';
+
+            if (grunt.file.exists(firstFile)) {
+                // read file, get 'emailname:' line
+                var hbsF = grunt.file.read(firstFile, "utf-8");
+                hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
+                if (hbsF !== null) {
+                    newemail = hbsF.toString().replace(/(\s*)emailname: ?/i, "").replace(/,/g, "") // quick fix to remove trailing comma
+                }
+            }
+
+            if(newemail !== '') {
+                grunt.log.ok("\'emailname\' found in front matter of file: " + firstFile);
+                grunt.log.ok(emailstring + newemail);
+            } else {
+                // if still no success, use modified version of project name
+                var newemail = project.replace(/-/g, "+").replace(/\//, '');
+                grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.\n");
+                grunt.log.warn(emailstring + newemail);
+            }
+            grunt.config.set('emailtest', newemail);
+
+        }
     }
     grunt.registerTask('checkEmailName', function() { checkEmailName(); });
 
