@@ -1,6 +1,7 @@
 # system files
 .DS_Store
 ._*
+.smbdelete*
 
 node_modules
 .sass-cache
