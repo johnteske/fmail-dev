@@ -2,23 +2,7 @@ module.exports = function(grunt) {
 
     var path = require('path'); // to get absolute path
 
-    // project
-    function checkProj() {
-        var proj = grunt.option('p') || grunt.option('project');
-        if (proj) {
-            if (!grunt.file.exists('src/' + proj)) {
-                grunt.fail.fatal('Project folder does not exist.\nTry running commands from the src/ directory to use auto-complete on folder names.')
-            }
-            else {
-                return proj;
-            }
-        }
-        else {
-            if ( grunt.option('force') ) { return ''; }
-            else { grunt.fail.warn('Please specify project folder by using \'--project=Project-Folder-Name\''); }
-        }
-    }
-    var project = checkProj();
+    var project = grunt.option('p') || grunt.option('project'); //var project = checkProj();
 
     var paths = { // specify here to allow use in functions outside of grunt config
         templates: 'templates',
@@ -338,6 +322,23 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
 
+
+    // project
+    function checkProject() {
+        if (project) {
+            if (!grunt.file.exists('src/' + project)) {
+                grunt.fail.fatal('Project folder does not exist.\nTry running commands from the src/ directory to use auto-complete on folder names.')
+            }
+        }
+        else {
+            if ( grunt.option('force') ) { return ''; }
+            else { grunt.fail.warn('Please specify project folder by using \'--project=Project-Folder-Name\''); }
+        }
+        grunt.log.ok("project:" + project);
+    }
+    grunt.registerTask('checkProject', function() { checkProject(); });
+
+
     grunt.registerTask('new', ['copy:new']);
 
     // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
@@ -382,7 +383,7 @@ module.exports = function(grunt) {
     }
     grunt.registerTask('checkColor', function() { checkColor(); });
 
-    grunt.registerTask('logo', ['checkColor', 'imagemagick-convert:logo']);
+    grunt.registerTask('logo', ['checkProject', 'checkColor', 'imagemagick-convert:logo']);
 
 
     grunt.registerTask('comb', 'Display links to check urls and analytics tags', function() {
