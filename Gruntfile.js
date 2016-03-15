@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     // options
     var project = grunt.option('p') || grunt.option('project'); //var project = checkProj();
-    var emailName = grunt.option('emailname');
+    // var emailName = grunt.option('emailname');
     var logoColor = grunt.option('logo') || 'red';
     var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
     var archivePrepend = sendDate + "-";
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
         paths: paths,
 
-        emailtest: emailName,
+        emailName: grunt.option('emailname'),
 
         // assemble email templates
         assemble: {
@@ -218,7 +218,7 @@ module.exports = function(grunt) {
                 options: {
                     patterns: [
                         { match: /\sclass=["'][\w \-]*['"]/g, replacement: '' },
-                        { match: 'EMAILNAME', replacement: '<%= emailtest %>' },
+                        { match: 'EMAILNAME', replacement: '<%= emailName %>' },
                         { match: '!img', replacement: 'img' }
                     ],
                     usePrefix: false
@@ -318,9 +318,9 @@ module.exports = function(grunt) {
     function checkEmailName() {
         var emailstring = "emailname: ";
 
-        if (grunt.config.get('emailtest')) {
+        if (grunt.config.get('emailName')) {
             // if --emailname is passed, use it
-            grunt.log.ok(emailstring + grunt.config.get('emailtest'));
+            grunt.log.ok(emailstring + grunt.config.get('emailName'));
         }
         else {
             // if no --emailname passed, check the source .hbs files
@@ -347,7 +347,7 @@ module.exports = function(grunt) {
                 grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.\n");
                 grunt.log.warn(emailstring + newemail);
             }
-            grunt.config.set('emailtest', newemail);
+            grunt.config.set('emailName', newemail);
 
         }
     }
