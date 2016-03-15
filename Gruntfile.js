@@ -64,32 +64,7 @@ module.exports = function(grunt) {
     var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
     var archivePrepend = sendDate + "-";
 
-    // function checkColor() {
-    //     // get .scss files, ignore files that start with an underscore
-    //     var projSrc = paths.src;
-    //     var scssFiles = grunt.file.expand( {cwd: projSrc}, ['*.scss','!_*.*'] ); //console.log(scssFiles)
-    //     var srcFile = projSrc + "/" + scssFiles[0];
-    //     var data = '';
-    //
-    //     if (grunt.file.exists(srcFile)) { //console.log(srcFile);
-    //
-    //         // read file, get 'emailname:' line
-    //         var scssF = grunt.file.read(srcFile, "utf-8");
-    //         scssF = /\$main-color:[ \S]*/.exec(scssF);
-    //
-    //         if (scssF !== null) {
-    //             data = scssF.toString().replace(/\$main-color: ?/i, "").replace(';',''); // .replace(/-/g, "+") // further filtering needed?
-    //         }
-    //     }
-    //
-    //     if (data !== '') {
-    //       // grunt.log.warn( data );
-    //       return data;
-    //     }
-    //     else { grunt.log.warn("$main-color not found"); }
-    //     // TODO: put project fallback here, can print either passed or fallback project name to console
-    // }
-    var color = '#2c8eea'; //checkColor() ||
+    var logoColor = grunt.option('logo') || 'red';
 
     var priv_defaults = {
         "archive": {
@@ -235,8 +210,8 @@ module.exports = function(grunt) {
         "imagemagick-convert": {
             logo:{
                 args:[
-                  '<%= paths.templates %>/assets/logo-2015.png', '-background', color, '-alpha', 'remove', '-resize', '290',
-                  '<%= paths.src %>/logo-' + color.replace('#','') + '.jpg'
+                  '<%= paths.templates %>/assets/logo-2015.png', '-background', logoColor, '-alpha', 'remove', '-resize', '290',
+                  '<%= paths.src %>/logo-' + logoColor.replace('#','') + '.jpg'
                 ]
             }
         },
@@ -378,7 +353,36 @@ module.exports = function(grunt) {
 
     grunt.registerTask('archive', ['copy:archive']); // 'clean'
 
-    grunt.registerTask('logo', ['imagemagick-convert:logo']);
+
+    function checkColor() {
+      //     // get .scss files, ignore files that start with an underscore
+      //     var projSrc = paths.src;
+      //     var scssFiles = grunt.file.expand( {cwd: projSrc}, ['*.scss','!_*.*'] ); //console.log(scssFiles)
+      //     var srcFile = projSrc + "/" + scssFiles[0];
+      //     var data = '';
+      //
+      //     if (grunt.file.exists(srcFile)) { //console.log(srcFile);
+      //
+      //         // read file, get 'emailname:' line
+      //         var scssF = grunt.file.read(srcFile, "utf-8");
+      //         scssF = /\$main-color:[ \S]*/.exec(scssF);
+      //
+      //         if (scssF !== null) {
+      //             data = scssF.toString().replace(/\$main-color: ?/i, "").replace(';',''); // .replace(/-/g, "+") // further filtering needed?
+      //         }
+      //     }
+      //
+      //     if (data !== '') {
+      //       // grunt.log.warn( data );
+      //       return data;
+      //     }
+      //     else { grunt.log.warn("$main-color not found"); }
+      //     // TODO: put project fallback here, can print either passed or fallback project name to console
+      grunt.log.ok("logo color:" + logoColor);
+    }
+    grunt.registerTask('checkColor', function() { checkColor(); });
+
+    grunt.registerTask('logo', ['checkColor', 'imagemagick-convert:logo']);
 
 
     grunt.registerTask('comb', 'Display links to check urls and analytics tags', function() {
