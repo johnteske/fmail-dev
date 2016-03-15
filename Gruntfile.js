@@ -14,35 +14,7 @@ module.exports = function(grunt) {
         ignore: '_*.*' // ignore files with leading underscore
     };
 
-    // emailName: Google Analytics tag, to add in dist
-    function checkEmailName() {
-        // get .hbs files, ignore files that start with an underscore
-        var projSrc = paths.src;
-        var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
-        var srcFile = projSrc + "/" + hbsFiles[0];
-        var data = '';
-
-        if (grunt.file.exists(srcFile)) { // console.log(srcFile);
-
-            // read file, get 'emailname:' line
-            var hbsF = grunt.file.read(srcFile, "utf-8");
-            hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
-            if (hbsF !== null) {
-                data = hbsF.toString().replace(/(\s*)emailname: ?/i, "").replace(/,/g, "") // quick fix to remove trailing comma
-            }
-        }
-
-        if (data !== '') {
-          return data;
-        }
-        else {
-          var projName = project.replace(/-/g, "+").replace(/\//, '');
-          grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.");
-          return projName;
-        }
-    }
-    var emailName = grunt.option('emailname') || checkEmailName();
-    grunt.log.ok("\'emailname:\' " + emailName);
+    var emailName = grunt.option('emailname');
 
     // archive
     var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
@@ -338,7 +310,6 @@ module.exports = function(grunt) {
     }
     grunt.registerTask('checkProject', function() { checkProject(); });
 
-
     grunt.registerTask('new', ['copy:new']);
 
     // grunt.registerTask('default', ['assemble', 'sass', 'juice']);
@@ -350,7 +321,37 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['processhtml:test']);
 
-    grunt.registerTask('dist', ['processhtml:dist', 'replace:dist']);
+    // emailName: Google Analytics tag, to add in dist
+    function checkEmailName() {
+        // // get .hbs files, ignore files that start with an underscore
+        // var projSrc = paths.src;
+        // var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
+        // var srcFile = projSrc + "/" + hbsFiles[0];
+        // var data = '';
+        //
+        // if (grunt.file.exists(srcFile)) { // console.log(srcFile);
+        //
+        //     // read file, get 'emailname:' line
+        //     var hbsF = grunt.file.read(srcFile, "utf-8");
+        //     hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
+        //     if (hbsF !== null) {
+        //         data = hbsF.toString().replace(/(\s*)emailname: ?/i, "").replace(/,/g, "") // quick fix to remove trailing comma
+        //     }
+        // }
+        //
+        // if (data !== '') {
+        //   return data;
+        // }
+        // else {
+        //   var projName = project.replace(/-/g, "+").replace(/\//, '');
+        //   grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.");
+        //   return projName;
+        // }
+        grunt.log.ok("\'emailname:\' " + emailName);
+    }
+    grunt.registerTask('checkEmailName', function() { checkEmailName(); });
+
+    grunt.registerTask('dist', ['checkEmailName', 'processhtml:dist', 'replace:dist']);
 
     grunt.registerTask('archive', ['copy:archive']); // 'clean'
 
