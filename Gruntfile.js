@@ -2,7 +2,12 @@ module.exports = function(grunt) {
 
     var path = require('path'); // to get absolute path
 
+    // options
     var project = grunt.option('p') || grunt.option('project'); //var project = checkProj();
+    var emailName = grunt.option('emailname');
+    var logoColor = grunt.option('logo') || 'red';
+    var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
+    var archivePrepend = sendDate + "-";
 
     var paths = { // specify here to allow use in functions outside of grunt config
         templates: 'templates',
@@ -13,14 +18,6 @@ module.exports = function(grunt) {
         // pdf: 'pdf', // eventually put pdfs in project folders
         ignore: '_*.*' // ignore files with leading underscore
     };
-
-    var emailName = grunt.option('emailname');
-
-    // archive
-    var sendDate = grunt.option('date') || grunt.template.today('yymmdd');
-    var archivePrepend = sendDate + "-";
-
-    var logoColor = grunt.option('logo') || 'red';
 
     var priv_defaults = {
         "archive": {
@@ -36,7 +33,6 @@ module.exports = function(grunt) {
         priv: grunt.file.exists('private.json') ? grunt.file.readJSON('private.json') : priv_defaults,
 
         paths: paths,
-
 
         // assemble email templates
         assemble: {
@@ -82,13 +78,13 @@ module.exports = function(grunt) {
                         }
                     },
                     // {
-                    //     expand: true,
-                    //     cwd: '<%= paths.build %>',
-                    //     src: '*.pdf',
-                    //     dest: '<%= priv.archive.html %>/' + archivePrepend,
-                    //     rename: function(dest, src) {
-                    //         return dest + archivePrepend + src;
-                    //     }
+                    // expand: true,
+                    // cwd: '<%= paths.build %>',
+                    // src: '*.pdf',
+                    // dest: '<%= priv.archive.html %>/' + archivePrepend,
+                    // rename: function(dest, src) {
+                    //  return dest + archivePrepend + src;
+                    // }
                     // },
                     {   // save dist files for HTML archive
                         expand: true,
@@ -108,7 +104,6 @@ module.exports = function(grunt) {
                 ]
             },
         },
-
 
         // compile CSS
         sass: {
@@ -134,14 +129,12 @@ module.exports = function(grunt) {
                 }
             },
             dist: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= paths.src %>',
-                        src: ['*.html', '!<%= paths.ignore %>'],
-                        dest: '<%= paths.build %>'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: '<%= paths.src %>',
+                    src: ['*.html', '!<%= paths.ignore %>'],
+                    dest: '<%= paths.build %>'
+                }]
             }
         },
 
@@ -166,8 +159,8 @@ module.exports = function(grunt) {
         "imagemagick-convert": {
             logo:{
                 args:[
-                  '<%= paths.templates %>/assets/logo-2015.png', '-background', logoColor, '-alpha', 'remove', '-resize', '290',
-                  '<%= paths.src %>/logo-' + logoColor.replace('#','') + '.jpg'
+                    '<%= paths.templates %>/assets/logo-2015.png', '-background', logoColor, '-alpha', 'remove', '-resize', '290',
+                    '<%= paths.src %>/logo-' + logoColor.replace('#','') + '.jpg'
                 ]
             }
         },
@@ -228,9 +221,9 @@ module.exports = function(grunt) {
                     ],
                     usePrefix: false
                 },
-                files: [
-                    {expand: true, flatten: true, src: ['<%= paths.dist %>/*.html'], dest: '<%= paths.dist %>'}
-                ]
+                files: [{
+                    expand: true, flatten: true, src: ['<%= paths.dist %>/*.html'], dest: '<%= paths.dist %>'
+                }]
             }
         },
 
@@ -246,11 +239,11 @@ module.exports = function(grunt) {
         // watch for changes to HTML & SCSS files
         watch: {
             templates: {
-              files: ['<%= paths.templates %>/css/scss/*','<%= paths.src %>/*.hbs','<%= paths.templates %>/layouts/*','<%= paths.templates %>/partials/*','<%= paths.templates %>/data/*','<%= paths.templates %>/helpers/*'],
-              tasks: ['newer:assemble'],
-              options: {
-                  atBegin: true
-              }
+                files: ['<%= paths.templates %>/css/scss/*','<%= paths.src %>/*.hbs','<%= paths.templates %>/layouts/*','<%= paths.templates %>/partials/*','<%= paths.templates %>/data/*','<%= paths.templates %>/helpers/*'],
+                tasks: ['newer:assemble'],
+                options: {
+                    atBegin: true
+                }
             },
             source: {
                 files: ['<%= paths.src %>/*.html', '<%= paths.src %>/*.scss', '!<%= paths.src %>/<%= paths.ignore %>'],
@@ -294,7 +287,6 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
 
 
-
     // project
     function checkProject() {
         if (project) {
@@ -330,21 +322,21 @@ module.exports = function(grunt) {
         //
         // if (grunt.file.exists(srcFile)) { // console.log(srcFile);
         //
-        //     // read file, get 'emailname:' line
-        //     var hbsF = grunt.file.read(srcFile, "utf-8");
-        //     hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
-        //     if (hbsF !== null) {
-        //         data = hbsF.toString().replace(/(\s*)emailname: ?/i, "").replace(/,/g, "") // quick fix to remove trailing comma
-        //     }
+        //                 // read file, get 'emailname:' line
+        //                 var hbsF = grunt.file.read(srcFile, "utf-8");
+        //                 hbsF = /^(\s*)emailname:[ \S]*/m.exec(hbsF); //
+        //                 if (hbsF !== null) {
+        //                                 data = hbsF.toString().replace(/(\s*)emailname: ?/i, "").replace(/,/g, "") // quick fix to remove trailing comma
+        //                 }
         // }
         //
         // if (data !== '') {
-        //   return data;
+        //         return data;
         // }
         // else {
-        //   var projName = project.replace(/-/g, "+").replace(/\//, '');
-        //   grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.");
-        //   return projName;
+        //         var projName = project.replace(/-/g, "+").replace(/\//, '');
+        //         grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.");
+        //         return projName;
         // }
         grunt.log.ok("\'emailname:\' " + emailName);
     }
@@ -356,30 +348,30 @@ module.exports = function(grunt) {
 
 
     function checkColor() {
-      //     // get .scss files, ignore files that start with an underscore
-      //     var projSrc = paths.src;
-      //     var scssFiles = grunt.file.expand( {cwd: projSrc}, ['*.scss','!_*.*'] ); //console.log(scssFiles)
-      //     var srcFile = projSrc + "/" + scssFiles[0];
-      //     var data = '';
-      //
-      //     if (grunt.file.exists(srcFile)) { //console.log(srcFile);
-      //
-      //         // read file, get 'emailname:' line
-      //         var scssF = grunt.file.read(srcFile, "utf-8");
-      //         scssF = /\$main-color:[ \S]*/.exec(scssF);
-      //
-      //         if (scssF !== null) {
-      //             data = scssF.toString().replace(/\$main-color: ?/i, "").replace(';',''); // .replace(/-/g, "+") // further filtering needed?
-      //         }
-      //     }
-      //
-      //     if (data !== '') {
-      //       // grunt.log.warn( data );
-      //       return data;
-      //     }
-      //     else { grunt.log.warn("$main-color not found"); }
-      //     // TODO: put project fallback here, can print either passed or fallback project name to console
-      grunt.log.ok("logo color:" + logoColor);
+        //                 // get .scss files, ignore files that start with an underscore
+        //                 var projSrc = paths.src;
+        //                 var scssFiles = grunt.file.expand( {cwd: projSrc}, ['*.scss','!_*.*'] ); //console.log(scssFiles)
+        //                 var srcFile = projSrc + "/" + scssFiles[0];
+        //                 var data = '';
+        //
+        //                 if (grunt.file.exists(srcFile)) { //console.log(srcFile);
+        //
+        //                                 // read file, get 'emailname:' line
+        //                                 var scssF = grunt.file.read(srcFile, "utf-8");
+        //                                 scssF = /\$main-color:[ \S]*/.exec(scssF);
+        //
+        //                                 if (scssF !== null) {
+        //                                                 data = scssF.toString().replace(/\$main-color: ?/i, "").replace(';',''); // .replace(/-/g, "+") // further filtering needed?
+        //                                 }
+        //                 }
+        //
+        //                 if (data !== '') {
+        //                         // grunt.log.warn( data );
+        //                         return data;
+        //                 }
+        //                 else { grunt.log.warn("$main-color not found"); }
+        //                 // TODO: put project fallback here, can print either passed or fallback project name to console
+        grunt.log.ok("logo color:" + logoColor);
     }
     grunt.registerTask('checkColor', function() { checkColor(); });
 
@@ -398,7 +390,7 @@ module.exports = function(grunt) {
             hbsF = hbsF.match(/href="([^"]*)"/g);
 
             if (hbsF !== null) {
-                data = hbsF; // .toString();
+                            data = hbsF; // .toString();
             }
         }
         //else "file not found"
