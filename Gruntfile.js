@@ -34,6 +34,8 @@ module.exports = function(grunt) {
 
         paths: paths,
 
+        emailtest: emailName,
+
         // assemble email templates
         assemble: {
             options: {
@@ -216,7 +218,7 @@ module.exports = function(grunt) {
                 options: {
                     patterns: [
                         { match: /\sclass=["'][\w \-]*['"]/g, replacement: '' },
-                        { match: 'EMAILNAME', replacement: emailName },
+                        { match: 'EMAILNAME', replacement: '<%= emailtest %>' },
                         { match: '!img', replacement: 'img' }
                     ],
                     usePrefix: false
@@ -314,6 +316,7 @@ module.exports = function(grunt) {
 
     // emailName: Google Analytics tag, to add in dist
     function checkEmailName() {
+        grunt.config.set('emailtest', 'EMAIL_TEST');
         // // get .hbs files, ignore files that start with an underscore
         // var projSrc = paths.src;
         // var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.hbs','!_*.*'] );
@@ -338,7 +341,7 @@ module.exports = function(grunt) {
         //         grunt.log.warn("\'emailname\' not found in .hbs front matter, using converted project name.");
         //         return projName;
         // }
-        grunt.log.ok("\'emailname:\' " + emailName);
+        grunt.log.ok("\'emailname:\' " + grunt.config.get('emailtest') + emailName);
     }
     grunt.registerTask('checkEmailName', function() { checkEmailName(); });
 
