@@ -299,12 +299,11 @@ module.exports = function(grunt) {
     function checkProject() {
         if (project) {
             if (!grunt.file.exists('src/' + project)) {
-                grunt.fail.fatal('Project folder does not exist.\nTry running commands from the src/ directory to use auto-complete on folder names.')
+                grunt.fatal('\nProject folder \'' + paths.src + '\' does not exist.\nTry running grunt from the paths.src directory, where you can use tab auto-completion on project folder names.')
             }
         }
         else {
-            if ( grunt.option('force') ) { return ''; }
-            else { grunt.fail.warn('Please specify project folder by using \'--project=Project-Folder-Name\''); }
+            grunt.fatal('\nPlease specify project folder by using \'--project=Project-Folder-Name\' or \'--p=Project-Folder-Name\'');
         }
         grunt.log.ok("project:" + project);
     }
