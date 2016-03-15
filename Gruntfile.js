@@ -299,7 +299,7 @@ module.exports = function(grunt) {
         else {
             grunt.fatal('\nPlease specify project folder by using \'--project=Project-Folder-Name\' or \'--p=Project-Folder-Name\'');
         }
-        grunt.log.ok("project:" + project);
+        grunt.log.ok("project: " + project);
     }
     grunt.registerTask('checkProject', function() { checkProject(); });
 
@@ -359,30 +359,30 @@ module.exports = function(grunt) {
 
 
     function checkColor() {
-        //                 // get .scss files, ignore files that start with an underscore
-        //                 var projSrc = paths.src;
-        //                 var scssFiles = grunt.file.expand( {cwd: projSrc}, ['*.scss','!_*.*'] ); //console.log(scssFiles)
-        //                 var srcFile = projSrc + "/" + scssFiles[0];
-        //                 var data = '';
+        // get .scss files, ignore files that start with an underscore
+        var projSrc = paths.src;
+        var scssFiles = grunt.file.expand( {cwd: projSrc}, ['*.scss','!_*.*'] ); //console.log(scssFiles)
+        var firstFile = projSrc + "/" + scssFiles[0];
+        var data = '';
+
+        if (grunt.file.exists(firstFile)) { //console.log(firstFile);
+            // read file, get 'emailname:' line
+            var scssF = grunt.file.read(firstFile, "utf-8");
+            scssF = /^(\s*)\$main-color:\s*[\S]*/.exec(scssF);
+
+            if (scssF !== null) {
+                 data = scssF.toString().replace(/\$main-color: ?/i, "").replace(';','').replace(',',''); // .replace(/-/g, "+") // further filtering needed?
+            }
+        }
+        console.log(data);
         //
-        //                 if (grunt.file.exists(srcFile)) { //console.log(srcFile);
-        //
-        //                                 // read file, get 'emailname:' line
-        //                                 var scssF = grunt.file.read(srcFile, "utf-8");
-        //                                 scssF = /\$main-color:[ \S]*/.exec(scssF);
-        //
-        //                                 if (scssF !== null) {
-        //                                                 data = scssF.toString().replace(/\$main-color: ?/i, "").replace(';',''); // .replace(/-/g, "+") // further filtering needed?
-        //                                 }
-        //                 }
-        //
-        //                 if (data !== '') {
-        //                         // grunt.log.warn( data );
-        //                         return data;
-        //                 }
-        //                 else { grunt.log.warn("$main-color not found"); }
-        //                 // TODO: put project fallback here, can print either passed or fallback project name to console
-        grunt.log.ok("logo color:" + logoColor);
+        // if (data !== '') {
+        //         // grunt.log.warn( data );
+        //         return data;
+        // }
+        // else { grunt.log.warn("$main-color not found"); }
+        // // TODO: put project fallback here, can print either passed or fallback project name to console
+        grunt.log.ok("logo color: " + logoColor);
     }
     grunt.registerTask('checkColor', function() { checkColor(); });
 
@@ -392,16 +392,16 @@ module.exports = function(grunt) {
     grunt.registerTask('comb', 'Display links to check urls and analytics tags', function() {
         var projSrc = paths.build; // check build dir, so .hbs file is not required in development
         var hbsFiles = grunt.file.expand( {cwd: projSrc}, ['*.html','!_*.*'] );
-        var srcFile = projSrc + "/" + hbsFiles[0]; // get first file
+        var firstFile = projSrc + "/" + hbsFiles[0]; // get first file
         var data = '';
 
-        if (grunt.file.exists(srcFile)) { // console.log(srcFile);
+        if (grunt.file.exists(firstFile)) { // console.log(firstFile);
             // read file, get 'emailname:' line
-            var hbsF = grunt.file.read(srcFile, "utf-8");
+            var hbsF = grunt.file.read(firstFile, "utf-8");
             hbsF = hbsF.match(/href="([^"]*)"/g);
 
             if (hbsF !== null) {
-                            data = hbsF; // .toString();
+                data = hbsF; // .toString();
             }
         }
         //else "file not found"
