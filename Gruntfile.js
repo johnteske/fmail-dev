@@ -217,9 +217,10 @@ module.exports = function(grunt) {
             dist: {
                 options: {
                     patterns: [
-                        { match: /\sclass=["'][\w \-]*['"]/g, replacement: '' },
+                        { match: /\sclass=["'][\w \-]*['"]/g, replacement: '' }, // remove CSS classes
+                        { match: /<!--([\S\s]*?)-->/g, replacement: '' }, // remove HTML comments
                         { match: 'EMAILNAME', replacement: '<%= emailName %>' },
-                        { match: '!img', replacement: 'img' }
+                        { match: '!img', replacement: 'img' } // enable tracking image
                     ],
                     usePrefix: false
                 },
