@@ -284,7 +284,7 @@ module.exports = function(grunt) {
 
 
     // load assemble
-    grunt.loadNpmTasks('assemble');
+    // grunt.loadNpmTasks('assemble');
 
     // load all Grunt tasks
     require('load-grunt-tasks')(grunt);
